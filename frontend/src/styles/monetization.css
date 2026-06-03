@@ -1,0 +1,221 @@
+/**
+ * Monetization Status Styles
+ * Real-time payment stream indicator with Web Monetization support
+ * 
+ * Features:
+ * - Floating overlay indicator showing payment stream status
+ * - Native Web Monetization mode (with Coil extension)
+ * - Demo simulator mode (for testing without extension)
+ * - Smooth glass-morphism aesthetic
+ */
+
+/* Base Monetization Status Container */
+.monetization-status-overlay {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  max-width: 380px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: rgba(9, 9, 14, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  font-family: 'Karla', sans-serif;
+  color: #F5F1E8;
+}
+
+.monetization-status-overlay.streaming {
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
+  animation: pulseGlow 3s infinite;
+}
+
+/* Status Badge - Pulsing Indicator Dot */
+.monetization-status-badge {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #64748b;
+  margin-top: 3px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.monetization-status-badge.active {
+  background-color: #10b981;
+  box-shadow: 0 0 10px #10b981;
+}
+
+.monetization-status-badge-ping {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #10b981;
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+  opacity: 0.75;
+}
+
+/* Content Section */
+.monetization-status-content {
+  flex: 1;
+}
+
+.monetization-status-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.monetization-status-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f8fafc;
+  font-family: 'Outfit', sans-serif;
+}
+
+.monetization-status-tag {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.monetization-status-tag.native {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.monetization-status-description {
+  margin: 4px 0 8px 0;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.monetization-status-creator {
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* Amount Display */
+.monetization-status-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #10b981;
+  margin: 0;
+}
+
+.monetization-status-currency {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Security Footer */
+.monetization-status-footer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 10px;
+  color: #64748b;
+}
+
+.monetization-status-footer-icon {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* Legacy Styles for Backward Compatibility */
+.monetization-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(45, 90, 61, 0.3), rgba(45, 90, 61, 0.15));
+  border-left: 3px solid #2D5A3D;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #F5DEB3;
+}
+
+.monetization-pulse {
+  display: flex;
+  align-items: center;
+  color: #2D5A3D;
+}
+
+.monetization-pulse svg {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.monetization-text {
+  font-weight: 500;
+}
+
+/* Animations */
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
+  }
+  50% {
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35);
+  }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .monetization-status-overlay {
+    bottom: 16px;
+    left: 16px;
+    max-width: calc(100vw - 32px);
+    padding: 12px 16px;
+  }
+
+  .monetization-status-title {
+    font-size: 13px;
+  }
+
+  .monetization-status-amount {
+    font-size: 16px;
+  }
+}
