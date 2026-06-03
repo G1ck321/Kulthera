@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Music, Palette, ArrowRight } from 'lucide-react';
+import { HeroCarousel } from '../components/HeroCarousel';
+import { HERO_SLIDES } from '../data/heroSlides';
 import { MUSEUM_ROOMS } from '../data/mockCreators';
 import '../styles/home.css';
+import '../styles/hero-carousel.css';
 import '../styles/responsive.css';
 
 const LOGO_SRC = '/assets/kulthera-logo.png';
@@ -13,7 +16,8 @@ export const HomePage: React.FC = () => {
   return (
     <div className="home-container">
       <section className="hero" aria-label="Welcome">
-        <div className="hero-texture" aria-hidden="true" />
+        <HeroCarousel slides={HERO_SLIDES} intervalMs={4500} />
+
         <div className="hero-content">
           <img
             src={LOGO_SRC}
@@ -21,8 +25,8 @@ export const HomePage: React.FC = () => {
             className="hero-logo"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
-              const fallback = document.getElementById('hero-title-fallback');
-              if (fallback) fallback.style.display = 'block';
+              const el = document.getElementById('hero-title-fallback');
+              if (el) el.style.display = 'block';
             }}
           />
           <h1 id="hero-title-fallback" className="hero-title-fallback" style={{ display: 'none' }}>
@@ -49,14 +53,14 @@ export const HomePage: React.FC = () => {
           <p className="hero-stat-value">{totalExhibits}</p>
           <p className="hero-stat-sub">curated exhibits across four rooms</p>
           <div className="hero-stat-dots">
-            <span className="dot-teal" />
-            <span className="dot-ochre" />
-            <span className="dot-rust" />
+            <span className="dot-green" />
+            <span className="dot-white" />
+            <span className="dot-black" />
           </div>
         </aside>
       </section>
 
-      <section className="rooms-section container-page section-tribal-accent">
+      <section className="rooms-section container-page">
         <div className="rooms-section-header">
           <h2>Museum Rooms</h2>
           <p className="rooms-section-hint">Choose a room to begin the stream.</p>
@@ -99,17 +103,17 @@ export const HomePage: React.FC = () => {
           <div className="step-card">
             <div className="step-number">2</div>
             <h3>Engage</h3>
-            <p>Listen, view, or read — your presence funds the creator in real time.</p>
+            <p>Your presence funds the creator in real time.</p>
           </div>
           <div className="step-card">
             <div className="step-number">3</div>
             <h3>Support</h3>
-            <p>Web Monetization streams micropayments to the active exhibit wallet.</p>
+            <p>Web Monetization streams to the active exhibit wallet.</p>
           </div>
           <div className="step-card">
             <div className="step-number">4</div>
             <h3>Track</h3>
-            <p>Creators manage uploads and analytics from their studio dashboard.</p>
+            <p>Creators upload and manage work from their studio.</p>
           </div>
         </div>
       </section>
@@ -118,33 +122,17 @@ export const HomePage: React.FC = () => {
         <div className="explainer-content">
           <div className="explainer-text">
             <h2>Attention becomes visible support</h2>
-            <p>
-              Traditional platforms take a large cut. Kulthera routes value directly to
-              custodians and artists through open web standards.
-            </p>
-            <p>No checkout wall — support flows while you explore.</p>
-            <Link to="/auth" className="btn-get-started">
-              Get started
-            </Link>
+            <p>Value routes directly to custodians and artists through open web standards.</p>
+            <Link to="/auth" className="btn-get-started">Get started</Link>
           </div>
           <div className="explainer-visual">
             <div className="visual-flow">
-              <div className="flow-item">
-                <div className="flow-icon">👤</div>
-                <p>Visitor</p>
-              </div>
+              <div className="flow-item"><div className="flow-icon">👤</div><p>Visitor</p></div>
               <span className="flow-arrow">→</span>
-              <div className="flow-item">
-                <div className="flow-icon">🏛️</div>
-                <p>Kulthera</p>
-              </div>
+              <div className="flow-item"><div className="flow-icon">🏛️</div><p>Kulthera</p></div>
               <span className="flow-arrow">→</span>
-              <div className="flow-item">
-                <div className="flow-icon">🎨</div>
-                <p>Creator</p>
-              </div>
+              <div className="flow-item"><div className="flow-icon">🎨</div><p>Creator</p></div>
             </div>
-            <p className="flow-caption">Support follows the exhibit you are viewing</p>
           </div>
         </div>
       </section>
@@ -160,14 +148,9 @@ export const HomePage: React.FC = () => {
             />
             <div className="featured-text">
               <h3>Sani Kokari — Wandering Minstrel</h3>
-              <p className="featured-origin">Mali · Bambara Kora tradition</p>
-              <p>
-                His Kora journeys document cultures across the Sahel. On Kulthera, your
-                listening time streams support directly to his wallet.
-              </p>
-              <Link to="/music" className="btn-listen">
-                Listen in Sound Roots
-              </Link>
+              <p className="featured-origin">Mali · Kora tradition</p>
+              <p>Your listening time streams support directly to his wallet.</p>
+              <Link to="/music" className="btn-listen">Listen in Sound Roots</Link>
             </div>
           </div>
         </div>
@@ -175,7 +158,7 @@ export const HomePage: React.FC = () => {
 
       <section className="final-cta">
         <h2>Ready to explore?</h2>
-        <p>Step into the museum — beauty is in the eye of the beholder.</p>
+        <p>Step into the museum.</p>
         <Link to="/gallery" className="btn-primary-large">
           Enter Museum <ArrowRight size={20} />
         </Link>

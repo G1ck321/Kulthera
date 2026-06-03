@@ -18,7 +18,10 @@ import axios, { AxiosInstance, AxiosError } from 'axios';
 // Point this to your backend server
 // During development: http://localhost:8000
 // In production: https://kultr-api.example.com
-const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL =
+  (import.meta as any).env?.VITE_API_BASE_URL ||
+  (import.meta as any).env?.VITE_API_URL ||
+  'http://localhost:8000';
 
 /**
  * Create axios instance with default configuration
@@ -131,38 +134,160 @@ export interface Exhibit {
   createdAt: string;
 }
 
+/** Backend returns snake_case; frontend expects camelCase */
+export function normalizeCreator(raw: Record<string, unknown>): Creator {
+  const wallet = String(raw.wallet_address ?? raw.walletAddress ?? '');
+  return {
+    id: String(raw.id ?? ''),
+    name: String(raw.name ?? 'Unknown'),
+    bio: String(raw.bio ?? ''),
+    country: String(raw.country ?? ''),
+    walletAddress: wallet,
+    paymentPointer: String(raw.payment_pointer ?? raw.paymentPointer ?? wallet),
+    avatarUrl: String(raw.avatar_url ?? raw.avatarUrl ?? ''),
+  };
+}
+
+export function normalizeExhibit(raw: Record<string, unknown>): Exhibit {
+  const mediaUrl = String(raw.media_url ?? raw.mediaUrl ?? '');
+  const previewUrl = String(raw.preview_url ?? raw.previewUrl ?? '') || mediaUrl;
+  const creatorRaw = (raw.creator ?? {}) as Record<string, unknown>;
+  return {
+    id: String(raw.id ?? ''),
+    roomId: String(raw.room_id ?? raw.roomId ?? ''),
+    title: String(raw.title ?? ''),
+    description: String(raw.description ?? ''),
+    culturalContext: String(raw.cultural_context ?? raw.culturalContext ?? ''),
+    mediaType: (raw.media_type ?? raw.mediaType ?? 'painting') as Exhibit['mediaType'],
+    mediaUrl,
+    previewUrl,
+    walletAddress: String(raw.wallet_address ?? raw.walletAddress ?? ''),
+    createdAt: String(raw.created_at ?? raw.createdAt ?? ''),
+    creator: normalizeCreator(creatorRaw),
+  };
+}
+
+const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
+  {
+    id: 'mock-1',
+    roomId: 'mock',
+    title: 'Sahel Ochres Color Study',
+    description: 'Contemporary Sahel migration narrative in ochre and clay.',
+    culturalContext: 'Mineral pigments from Niger clay cliffs.',
+    mediaType: 'painting',
+    mediaUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800',
+    previewUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=400',
+    walletAddress: '$ilp.interledger-test.dev/amina',
+    createdAt: '',
+    creator: {
+      id: '1',
+      name: 'Amina Bello',
+      bio: 'Sahel fine artist',
+      country: 'Niger',
+      walletAddress: '$ilp.interledger-test.dev/amina',
+      paymentPointer: '$ilp.interledger-test.dev/amina',
+      avatarUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=150',
+    },
+  },
+  {
+    id: 'mock-2',
+    roomId: 'mock',
+    title: 'Market Day Intersections',
+    description: 'Layered digital illustration of market motion.',
+    culturalContext: 'West African market day traditions.',
+    mediaType: 'painting',
+    mediaUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=800',
+    previewUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=400',
+    walletAddress: '$ilp.interledger-test.dev/amina',
+    createdAt: '',
+    creator: {
+      id: '1',
+      name: 'Amina Bello',
+      bio: 'Sahel fine artist',
+      country: 'Niger',
+      walletAddress: '$ilp.interledger-test.dev/amina',
+      paymentPointer: '$ilp.interledger-test.dev/amina',
+      avatarUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=150',
+    },
+  },
+  {
+    id: 'mock-3',
+    roomId: 'mock',
+    title: 'Royal Kente Study',
+    description: 'Hand-woven geometric royal patterns.',
+    culturalContext: 'Bonwire weaving tradition, Ghana.',
+    mediaType: 'artifact',
+    mediaUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=800',
+    previewUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=400',
+    walletAddress: '$ilp.interledger-test.dev/nana',
+    createdAt: '',
+    creator: {
+      id: '2',
+      name: 'Nana Kwame',
+      bio: 'Master Kente weaver',
+      country: 'Ghana',
+      walletAddress: '$ilp.interledger-test.dev/nana',
+      paymentPointer: '$ilp.interledger-test.dev/nana',
+      avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&q=80&w=150',
+    },
+  },
+  {
+    id: 'mock-4',
+    roomId: 'mock',
+    title: 'Benin Bronze Head Study',
+    description: 'Lost-wax brass casting documentation.',
+    culturalContext: 'Kingdom of Benin royal guild tradition.',
+    mediaType: 'artifact',
+    mediaUrl: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&q=80&w=800',
+    previewUrl: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&q=80&w=400',
+    walletAddress: '$ilp.interledger-test.dev/kunle',
+    createdAt: '',
+    creator: {
+      id: '3',
+      name: 'Master Drummer Kunle',
+      bio: 'Percussion custodian',
+      country: 'Nigeria',
+      walletAddress: '$ilp.interledger-test.dev/kunle',
+      paymentPointer: '$ilp.interledger-test.dev/kunle',
+      avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
+    },
+  },
+];
+
 /**
  * GET /exhibits
- * Fetch paginated list of all exhibits
- * Used for: Gallery, search, browsing
- * 
- * Why pagination? On high bandwidth, we could load all 1000 exhibits.
- * But for low-bandwidth regions (target market), we load 12 at a time.
  */
 export const fetchExhibits = async (
   page: number = 1,
   limit: number = 12,
   filters?: { roomId?: string; mediaType?: string }
 ): Promise<{ exhibits: Exhibit[]; total: number }> => {
-  const response = await apiClient.get<{ exhibits: Exhibit[]; total: number }>('/exhibits', {
-    params: {
-      page,
-      limit,
-      ...filters,
-    },
-  });
-  return response.data;
+  try {
+    const response = await apiClient.get<{ exhibits: Record<string, unknown>[]; total: number }>(
+      '/exhibits',
+      { params: { page, limit, ...filters } }
+    );
+    const exhibits = (response.data.exhibits ?? []).map(normalizeExhibit);
+    return { exhibits, total: response.data.total ?? exhibits.length };
+  } catch (err) {
+    console.warn('[fetchExhibits] API unavailable, using mock data', err);
+    let mock = [...GALLERY_MOCK_EXHIBITS];
+    if (filters?.mediaType) {
+      mock = mock.filter((e) => e.mediaType === filters.mediaType);
+    }
+    return { exhibits: mock, total: mock.length };
+  }
 };
 
-/**
- * GET /exhibits/:id
- * Fetch single exhibit with full details and creator info
- * Used when: User clicks on an exhibit to view/interact
- * Backend also initializes Web Monetization wallet for this creator
- */
 export const fetchExhibit = async (exhibitId: string): Promise<Exhibit> => {
-  const response = await apiClient.get<Exhibit>(`/exhibits/${exhibitId}`);
-  return response.data;
+  try {
+    const response = await apiClient.get<Record<string, unknown>>(`/exhibits/${exhibitId}`);
+    return normalizeExhibit(response.data);
+  } catch {
+    const found = GALLERY_MOCK_EXHIBITS.find((e) => e.id === exhibitId);
+    if (found) return found;
+    throw new Error('Exhibit not found');
+  }
 };
 
 /**

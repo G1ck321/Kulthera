@@ -1,158 +1,115 @@
-/* Auth & creator workspace — warm light (aligned with tribal theme) */
-
-:root {
-  --mint: var(--mint-accent, #3d9b7a);
-  --mint-dim: var(--mint-soft, #d4f0e4);
-  --mint-border: rgba(61, 155, 122, 0.4);
-  --surface-dark: var(--sand, #faf6f0);
-  --surface-card: var(--cream, #fffdf9);
-  --surface-elevated: var(--sand-deep, #f0e6d8);
-}
+/* Auth & dashboard — white / black / green */
 
 .page-mint {
-  background: var(--sand);
-  color: var(--text-dark);
+  background: var(--brand-white);
+  color: var(--brand-black);
   min-height: 100vh;
 }
 
 .mint-kicker {
-  color: var(--terracotta);
+  color: var(--brand-green-dark);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .mint-input,
 .mint-textarea {
-  border: var(--border-warm);
-  background: var(--cream);
-  color: var(--text-dark);
+  border: 2px solid var(--brand-black);
+  background: var(--brand-white);
+  color: var(--brand-black);
+  border-radius: var(--radius-sm);
 }
 
 .mint-btn-primary {
-  background: var(--mint-soft);
-  color: var(--text-dark);
-  border: 2px solid var(--mint-accent);
+  background: var(--brand-green);
+  color: var(--brand-black);
+  border: 2px solid var(--brand-black);
+  font-weight: 700;
 }
 
 .mint-btn-outline {
-  border-color: var(--terracotta);
-  color: var(--terracotta);
+  border: 2px solid var(--brand-black);
+  color: var(--brand-black);
+  background: var(--brand-white);
 }
 
 .auth-gateway {
+  background: var(--brand-gray);
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
-  background: var(--sand);
-  position: relative;
 }
 
 .auth-gateway::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: var(--bg-tribal);
-  background-size: cover;
-  background-position: center;
-  opacity: 0.14;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.auth-gateway > * {
-  position: relative;
-  z-index: 1;
+  display: none;
 }
 
 .auth-gateway-brand h1 {
-  font-size: clamp(2rem, 6vw, 2.75rem);
-  font-weight: 800;
-  color: var(--terracotta-deep);
-  text-align: center;
+  color: var(--brand-black);
 }
 
 .auth-gateway-tagline {
-  color: var(--terracotta);
-  text-align: center;
-  margin-bottom: 32px;
+  color: var(--brand-green-dark);
 }
 
 .auth-gateway-card {
-  width: 100%;
-  max-width: 420px;
-  padding: 28px 24px;
-  border-radius: var(--radius-lg);
-  background: var(--bg-card);
-  border: var(--border-warm);
-  box-shadow: var(--shadow-md);
+  background: var(--brand-white);
+  border: 2px solid var(--brand-black);
+  box-shadow: 6px 6px 0 var(--brand-black);
+}
+
+.role-toggle-mint {
+  border: 2px solid var(--brand-black);
+  overflow: hidden;
 }
 
 .role-toggle-mint button {
-  background: var(--sand-deep);
+  background: var(--brand-white);
   color: var(--text-muted);
 }
 
 .role-toggle-mint button.active {
-  background: var(--mint-soft);
-  color: var(--text-dark);
-  border-color: var(--mint-accent);
-}
-
-.creator-workspace {
-  background: transparent;
+  background: var(--brand-green);
+  color: var(--brand-black);
 }
 
 .creator-stat-card {
-  background: var(--bg-card);
-  border: var(--border-warm);
+  border: 2px solid var(--brand-black);
+  background: var(--brand-white);
 }
 
 .creator-stat-card h3 {
-  color: var(--terracotta);
-}
-
-.creator-stat-value {
-  color: var(--text-dark);
+  color: var(--brand-green-dark);
 }
 
 .creator-stat-split div strong {
-  color: var(--mint-accent);
+  color: var(--brand-green);
 }
 
 .upload-pipeline {
-  background: var(--bg-card);
-  border: var(--border-warm);
+  border: 2px solid var(--brand-black);
 }
 
 .upload-dropzone {
-  border-color: var(--ochre);
-  color: var(--terracotta);
-  background: var(--sand);
+  border: 2px dashed var(--brand-black);
+  color: var(--brand-black);
+  background: var(--brand-gray);
 }
 
 .field-label {
-  color: var(--terracotta);
-}
-
-.art-style-chip {
-  border: var(--border-light);
-  background: var(--cream);
-  color: var(--text-muted);
+  color: var(--brand-black);
 }
 
 .art-style-chip.selected {
-  border-color: var(--ochre);
-  background: rgba(232, 168, 56, 0.15);
-  color: var(--text-dark);
+  border-color: var(--brand-green);
+  background: var(--brand-green-soft);
 }
 
 .onboarding-modal {
-  background: var(--cream);
-  border: var(--border-warm);
-  color: var(--text-dark);
+  background: var(--brand-white);
+  border: 2px solid var(--brand-black);
+  color: var(--brand-black);
 }
 
 .onboarding-overlay {
-  background: rgba(42, 31, 24, 0.5);
+  background: rgba(0, 0, 0, 0.6);
 }

@@ -76,7 +76,10 @@ async def list_exhibits(
     pages = (total + limit - 1) // limit if total > 0 else 0
     
     return {
-        "exhibits": [ExhibitResponse.from_orm(exhibit).dict() for exhibit in exhibits],
+        "exhibits": [
+            ExhibitResponse.model_validate(exhibit).model_dump(mode="json")
+            for exhibit in exhibits
+        ],
         "total": total,
         "page": page,
         "pages": pages

@@ -63,7 +63,8 @@ export const GalleryPage: React.FC = () => {
         const data = await fetchExhibits(1, 50, {
           mediaType: filter === 'all' ? undefined : filter,
         });
-        setExhibits(data.exhibits);
+        const visual = data.exhibits.filter((e) => e.mediaType !== 'audio');
+        setExhibits(visual);
       } catch (err) {
         setError('Could not load gallery. Please try again later.');
         console.error(err);
@@ -188,8 +189,10 @@ export const GalleryPage: React.FC = () => {
         </button>
       </div>
 
-      {/* Gallery grid */}
       <div className="gallery-grid gallery-grid-responsive">
+        {filteredExhibits.length === 0 && !isLoading && (
+          <p className="gallery-empty">No exhibits in this category. Try another filter or start the API.</p>
+        )}
         {filteredExhibits.map((exhibit) => (
           <div
             key={exhibit.id}
@@ -198,9 +201,13 @@ export const GalleryPage: React.FC = () => {
           >
             <div className="card-image-wrapper">
               <img
-                src={exhibit.previewUrl}
+                src={exhibit.previewUrl || exhibit.mediaUrl}
                 alt={exhibit.title}
                 className="card-image"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=400';
+                }}
               />
               <div className="card-overlay">
                 <button className="card-action">
