@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
               (e.target as HTMLImageElement).style.display = 'none';
             }}
           />
-          <span className="logo-text">Kulthera</span>
+          <h1 className="logo-text">Kulthera</h1>
         </Link>
 
         <nav className="nav-desktop">
