@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, CheckCircle2, ShieldCheck, HelpCircle } from 'lucide-react';
+import { Sparkles, ShieldCheck } from 'lucide-react';
 
 interface MonetizationStatusProps {
   creatorName: string;
@@ -14,7 +14,6 @@ interface MonetizationStatusProps {
  */
 export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({ creatorName, paymentPointer }) => {
   const [simulatedSupport, setSimulatedSupport] = useState<number>(0);
-  const isStreaming = true; // Always true for the steady rate counter
 
   useEffect(() => {
     // Trigger localized showcase simulation interval

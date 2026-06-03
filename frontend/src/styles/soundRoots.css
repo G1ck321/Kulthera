@@ -222,17 +222,17 @@
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-normal);
+}
 
-  &:hover {
+  .btn-play:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
   }
 
-  &.playing {
+  .btn-play.playing {
     background: linear-gradient(135deg, #A64D4D, #8B3A3A);
     color: var(--text-light);
   }
-}
 
 /* Volume control */
 .volume-control {

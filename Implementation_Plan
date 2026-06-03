@@ -1,0 +1,65 @@
+Kulthera User & Analytics Evolution Plan
+The goal of this phase is to move from an anonymous, static-demo state into a functional, user-driven platform with robust backend persistence. We will reintroduce the login/signup flow, differentiate between Creators and Art Enthusiasts, build out the Creator Dashboard with conversion/translation metrics, add entry modals for cultural context, and refine the gallery/navbar.
+
+User Review Required
+IMPORTANT
+
+Creator vs. Enthusiast Linking: When a user signs up as a "Creator", they need an associated Creator profile (with a wallet address, bio, etc.). For this MVP step, I propose that signing up as a Creator automatically generates an empty placeholder Creator profile for them which they can manage later, or links them to an existing demo creator profile. I will proceed with generating an empty placeholder profile.
+Currency Conversion (Translation by location): Web Monetization streams in ILP packets (e.g., USD or standard ILP). I will implement a visual localization layer in the UI that takes the USD amount and converts it to a local equivalent (e.g., Nigerian Naira - NGN, or West African CFA franc) based on a selected or mocked local region to demonstrate the "Translation by location" requirement.
+Proposed Changes
+Backend: Auth & Users Feasibility
+[NEW] 
+user.py
+Create a new SQLAlchemy User model with fields for email, password_hash, name, is_creator, and a foreign key creator_id linking to the Creator table.
+
+[MODIFY] 
+auth.py
+Replace the mock in-memory STORED_USERS dictionary with real SQLAlchemy database queries.
+
+Implement robust password hashing using passlib and bcrypt.
+In /signup: Add is_creator to the request payload. If is_creator=True, create a stub Creator record in the database and link it.
+Update /me to fetch the real authenticated user via the JWT token.
+[MODIFY] 
+requirements.txt
+Add passlib[bcrypt] and PyJWT to ensure production-ready auth execution.
+
+Frontend: Navigation & Auth Reintegration
+[MODIFY] 
+App.tsx
+Re-inject AuthProvider, AuthPage, and CreatorDashboardPage routes.
+
+[MODIFY] 
+Header.tsx
+Build a "Decent Navbar" that logically separates public navigation (Gallery, Sound Roots) from authenticated navigation. It will include a clear "Sign In / Sign Up" flow, and a dynamic "Creator Dashboard" button that only appears for users with isCreator = true.
+
+[MODIFY] 
+AuthPage.tsx
+Update the signup form to include a role toggle: "I am an Art Enthusiast" vs "I am a Creator". This will feed into the backend signup request.
+
+Frontend: Modals, Gallery, & Dashboard
+[NEW] 
+ExhibitEntryModal.tsx
+Create a modal that intercepts the user before they enter an artist's specific exhibit/room.
+
+NOTE
+
+This modal will explain the cultural context of the exhibit and notify the user that their time spent inside will directly fund the creator via streamed micropayments. The user must click "Enter Exhibit" to proceed.
+
+[MODIFY] 
+GalleryPage.tsx
+Simplify the gallery to clearly display the catalog of available art and music. Clicking an exhibit will trigger the ExhibitEntryModal rather than navigating immediately.
+
+[MODIFY] 
+CreatorDashboardPage.tsx
+Integrate backend data fetching utilizing the /dashboard/creators/me endpoint.
+Conversion Rate: Add metrics showing "Visitors vs Supporters" (e.g., total views vs monetized views) and the estimated average time spent per user.
+Translation by Location: Add a toggle or display panel that translates the USD earnings into a local African currency (e.g., NGN, GHS, XOF) using a fixed conversion rate for MVP demonstration purposes, proving localization viability.
+Verification Plan
+Automated/Local Tests
+Run npm run build to ensure no TypeScript regressions.
+Execute python -m backend.app.seed.seed_data (after wiping kultr_local.db) to ensure the database schema migrations accommodate the new User model without errors.
+Manual Verification
+Sign up as a new "Art Enthusiast" and verify restricted dashboard access.
+Sign up as a new "Creator", verify successful login, and verify access to the Creator Dashboard.
+Click on a Gallery exhibit and ensure the "Cultural Context Modal" appears and blocks entry until acknowledged.
+Verify the Creator Dashboard correctly fetches mock analytics and correctly computes the local currency conversion translation.

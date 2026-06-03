@@ -177,12 +177,12 @@
   text-decoration: none;
   transition: all 200ms ease;
 
-  &:hover {
+}
+
+ .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
   }
-}
-
 /* Mobile menu toggle */
 .menu-toggle {
   display: none;

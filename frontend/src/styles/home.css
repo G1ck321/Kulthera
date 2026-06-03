@@ -305,12 +305,12 @@
   font-weight: 600;
   transition: all var(--transition-normal);
 
-  &:hover {
+}
+
+  .btn-get-started:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(212, 175, 55, 0.3);
   }
-}
-
 /* Visual flow */
 .explainer-visual {
   display: flex;
@@ -441,11 +441,11 @@
   margin-top: 12px;
   transition: all var(--transition-normal);
 
-  &:hover {
-    transform: translateY(-2px);
-  }
 }
 
+  .btn-listen:hover {
+    transform: translateY(-2px);
+  }
 /* Final CTA */
 .final-cta {
   padding: 80px 20px;

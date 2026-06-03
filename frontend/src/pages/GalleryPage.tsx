@@ -15,7 +15,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchExhibits, Exhibit } from '../utils/apiService';
 import { MonetizationStatus } from '../components/MonetizationStatus';
-import { X, MapPin, User } from 'lucide-react';
+import { X, MapPin } from 'lucide-react';
 import '../styles/gallery.css';
 
 export const GalleryPage: React.FC = () => {

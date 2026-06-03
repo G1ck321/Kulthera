@@ -13,7 +13,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchExhibits, Exhibit } from '../utils/apiService';
 import { MonetizationStatus } from '../components/MonetizationStatus';
-import { MapPin, Globe, Zap } from 'lucide-react';
+import { MapPin, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const ExplorePage: React.FC = () => {

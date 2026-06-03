@@ -16,21 +16,21 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Music, Play, Pause, Volume2, Clock, MapPin, Award } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { fetchExhibits, Exhibit } from '../utils/apiService';
 import { MonetizationStatus } from '../components/MonetizationStatus';
 import { MusicExhibit } from '../components/MusicExhibit';
 import '../styles/soundRoots.css';
 
 /**
- * MusicExhibit: Represents one music track/performance
+ * MusicExhibitType: Represents one music track/performance
  * Extended exhibit type with audio-specific metadata
  */
-interface MusicExhibit extends Exhibit {
-  duration: number; // in seconds
-  instruments: string[]; // e.g., ["kora", "talking drum"]
-  language: string; // e.g., "Mandinka", "Yoruba"
-  tradition: string; // e.g., "Griot tradition", "Call-and-response"
+interface MusicExhibitType extends Exhibit {
+  duration?: number; // in seconds
+  instruments?: string[]; // e.g., ["kora", "talking drum"]
+  language?: string; // e.g., "Mandinka", "Yoruba"
+  tradition?: string; // e.g., "Griot tradition", "Call-and-response"
 }
 
 /**
@@ -46,11 +46,11 @@ interface MusicExhibit extends Exhibit {
  * - Low bandwidth design (not HD-only)
  */
 export const SoundRootsPage: React.FC = () => {
-  const [exhibits, setExhibits] = useState<MusicExhibit[]>([]);
+  const [exhibits, setExhibits] = useState<MusicExhibitType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPlaying, setCurrentPlaying] = useState<string | null>(null);
-  const [displayedExhibit, setDisplayedExhibit] = useState<MusicExhibit | null>(null);
+  const [displayedExhibit, setDisplayedExhibit] = useState<MusicExhibitType | null>(null);
 
   /**
    * Load all music exhibits from backend
@@ -89,7 +89,7 @@ export const SoundRootsPage: React.FC = () => {
    * Handle exhibit selection
    * Updates the main player display
    */
-  const handleSelectExhibit = (exhibit: MusicExhibit) => {
+  const handleSelectExhibit = (exhibit: MusicExhibitType) => {
     setDisplayedExhibit(exhibit);
     setCurrentPlaying(exhibit.id);
   };
@@ -180,7 +180,7 @@ export const SoundRootsPage: React.FC = () => {
                   <p className="creator-role">{displayedExhibit.creator.bio}</p>
                   <div className="creator-stats">
                     <div className="stat">
-                      <span className="stat-value">{displayedExhibit.country || 'Africa'}</span>
+                      <span className="stat-value">{displayedExhibit.creator.country || 'Africa'}</span>
                       <span className="stat-label">Origin</span>
                     </div>
                   </div>

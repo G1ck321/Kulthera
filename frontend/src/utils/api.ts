@@ -1,7 +1,7 @@
 import { Room, Exhibit, ViewSession } from '../types/museum';
 
 // Use local port 8000 for FastAPI communications during development
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 
 /**
  * Clean Fetch wrapper that automatically handles non-200 responses.
@@ -12,7 +12,7 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
  *   a clear delivery status.
  */
 async function apiRequest<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const url = `${BASE_URL}${endpoint}`;
+  const url = `${API_BASE_URL}${endpoint}`;
   
   const headers = {
     'Content-Type': 'application/json',
