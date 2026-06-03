@@ -22,7 +22,14 @@ export const Header: React.FC = () => {
     <header className="header">
       <div className="header-container">
         <Link to="/" className="logo">
-          <span className="logo-emoji">🏛️</span>
+          <img
+            src="/assets/kulthera-logo.png"
+            alt=""
+            className="logo-img"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
           <span className="logo-text">Kulthera</span>
         </Link>
 

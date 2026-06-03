@@ -1,51 +1,67 @@
-/* Kultr Design System - African-Inspired Dark Theme */
+/* Kulthera — warm light design system (Tribal Africa + Open references) */
 
 :root {
-  /* Typography */
-  --font-header: 'Poppins', sans-serif;
-  --font-body: 'Karla', sans-serif;
-  
-  /* African-inspired color palette */
-  --primary-gold: #D4AF37;        /* Gold: celebration, wealth, heritage */
-  --primary-light: #F5DEB3;       /* Light gold: warmth, accessibility */
-  --accent-rust: #A64D4D;         /* Rust: earth, tradition, authenticity */
-  --accent-forest: #2D5A3D;       /* Forest green: growth, harmony, nature */
-  --accent-indigo: #2E3B52;       /* Indigo: depth, wisdom, dignity */
-  
-  --text-light: #F5F1E8;          /* Warm off-white: readable, warm */
-  --text-muted: #A89E8C;          /* Muted tan: secondary info */
-  --text-dark: #1A1614;           /* Deep brown: primary text on light */
-  
-  --bg-dark: #0F0D0B;             /* Almost black: main background */
-  --bg-card: rgba(255, 255, 255, 0.05);
-  --bg-hover: rgba(212, 175, 55, 0.08);
-  
-  /* Gradients */
-  --grad-primary: linear-gradient(135deg, #D4AF37, #F5DEB3);
-  --grad-rust: linear-gradient(135deg, #A64D4D, #8B3A3A);
-  --grad-forest: linear-gradient(135deg, #2D5A3D, #1A3A24);
-  --grad-dark: linear-gradient(180deg, rgba(20, 20, 18, 0.6) 0%, rgba(10, 10, 8, 0.9) 100%);
-  
-  /* Borders */
-  --border-light: 1px solid rgba(255, 255, 255, 0.1);
-  --border-gold: 1px solid rgba(212, 175, 55, 0.3);
-  
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.5);
-  
-  /* Layout */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  
-  /* Transitions */
+  --font-header: 'Outfit', 'Poppins', sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Karla', sans-serif;
+
+  /* Warm earth palette */
+  --terracotta: #c45c26;
+  --terracotta-deep: #8b3a1a;
+  --ochre: #e8a838;
+  --ochre-light: #f5d78e;
+  --sand: #faf6f0;
+  --sand-deep: #f0e6d8;
+  --clay: #5c3d2e;
+  --clay-muted: #7d5c4a;
+  --cream: #fffdf9;
+  --mint-accent: #3d9b7a;
+  --mint-soft: #d4f0e4;
+
+  /* Semantic tokens */
+  --primary-gold: var(--ochre);
+  --primary-light: var(--ochre-light);
+  --accent-rust: var(--terracotta);
+  --accent-forest: var(--mint-accent);
+  --text-light: var(--clay);
+  --text-muted: var(--clay-muted);
+  --text-dark: #2a1f18;
+  --text-on-dark: #fffdf9;
+
+  --bg-page: var(--sand);
+  --bg-elevated: var(--cream);
+  --bg-card: rgba(255, 253, 249, 0.92);
+  --bg-hover: rgba(196, 92, 38, 0.08);
+  --bg-dark: var(--sand);
+
+  --grad-warm: linear-gradient(165deg, #f5d78e 0%, #e8a838 45%, #c45c26 100%);
+  --grad-hero-overlay: linear-gradient(
+    180deg,
+    rgba(42, 31, 24, 0.55) 0%,
+    rgba(92, 61, 46, 0.35) 40%,
+    rgba(250, 246, 240, 0.92) 100%
+  );
+  --grad-primary: linear-gradient(135deg, var(--ochre), var(--ochre-light));
+  --grad-forest: linear-gradient(135deg, var(--mint-accent), #2d7a5f);
+
+  --border-light: 1px solid rgba(92, 61, 46, 0.12);
+  --border-gold: 1px solid rgba(232, 168, 56, 0.45);
+  --border-warm: 1px solid rgba(196, 92, 38, 0.2);
+
+  --shadow-sm: 0 2px 12px rgba(92, 61, 46, 0.08);
+  --shadow-md: 0 8px 28px rgba(92, 61, 46, 0.12);
+  --shadow-lg: 0 20px 48px rgba(92, 61, 46, 0.15);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
   --transition-fast: 150ms ease;
   --transition-normal: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Tribal pattern assets */
+  --bg-tribal: url('/assets/tribal-africa-bg.jpg');
+  --bg-open-texture: url('/assets/open-hero.jpg');
 }
 
-/* Global Reset & Base Setup */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -55,11 +71,12 @@
 }
 
 body {
-  background-color: var(--bg-dark);
+  background-color: var(--bg-page);
   color: var(--text-light);
   font-family: var(--font-body);
   overflow-x: hidden;
   min-height: 100vh;
+  line-height: 1.6;
 }
 
 html {
@@ -70,10 +87,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-header);
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
-/* Respect user motion preferences */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -83,57 +99,96 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Custom Scrollbar for Premium Feel */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-dark);
+  background: var(--sand-deep);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-gold);
-  border-radius: 4px;
-  opacity: 0.5;
-}
-::-webkit-scrollbar-thumb:hover {
-  opacity: 0.8;
+  background: var(--ochre);
+  border-radius: 5px;
 }
 
-/* Glass panel utility - for monetization indicators */
 .glass-panel {
-  background: rgba(212, 175, 55, 0.08);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: var(--bg-card);
+  border: var(--border-warm);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: var(--radius-md);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
 }
 
 .glass-panel:hover {
-  background: rgba(212, 175, 55, 0.12);
-  border-color: rgba(212, 175, 55, 0.3);
-
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
-/* Dynamic Animation Keyframes */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px var(--accent-emerald-glow);
-    border-color: rgba(16, 185, 129, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(16, 185, 129, 0.35);
-    border-color: rgba(16, 185, 129, 0.8);
-  }
+/* Shared buttons */
+.btn-primary-large,
+.btn-secondary-large {
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all var(--transition-normal);
+  font-size: 1rem;
+  font-family: var(--font-header);
+  border: none;
+  cursor: pointer;
 }
 
-@keyframes floatParticles {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.8; }
-  90% { opacity: 0.8; }
-  100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+.btn-primary-large {
+  background: var(--mint-soft);
+  color: var(--text-dark);
+  border: 2px solid var(--mint-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary-large:hover {
+  background: #b8e8d4;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary-large {
+  background: transparent;
+  color: var(--ochre-light);
+  border: 2px solid var(--ochre);
+}
+
+.btn-secondary-large:hover {
+  background: rgba(232, 168, 56, 0.15);
+  color: var(--cream);
+}
+
+.btn-outline-warm {
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--terracotta);
+  color: var(--terracotta);
+  background: transparent;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-normal);
+}
+
+.btn-outline-warm:hover {
+  background: rgba(196, 92, 38, 0.1);
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(61, 155, 122, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(61, 155, 122, 0.4);
+  }
 }
 
 @keyframes shimmer {
@@ -141,10 +196,32 @@ h1, h2, h3, h4, h5, h6 {
   100% { background-position: 200% 0; }
 }
 
-/* Shimmer Loading State Placeholder */
 .shimmer-box {
-  background: linear-gradient(90deg, #16161f 25%, #242435 50%, #16161f 75%);
+  background: linear-gradient(90deg, var(--sand-deep) 25%, var(--cream) 50%, var(--sand-deep) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s infinite linear;
   border-radius: var(--radius-sm);
+}
+
+/* Page sections on warm base */
+.section-warm {
+  background: var(--bg-elevated);
+  border-top: var(--border-light);
+  border-bottom: var(--border-light);
+}
+
+.section-tribal-accent {
+  position: relative;
+  background: var(--sand);
+}
+
+.section-tribal-accent::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg-tribal);
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.12;
+  pointer-events: none;
 }

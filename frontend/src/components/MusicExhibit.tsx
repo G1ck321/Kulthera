@@ -136,8 +136,8 @@ export const MusicExhibit: React.FC<MusicExhibitProps> = ({ src, title, artistNa
         maxWidth: '520px',
         padding: '24px',
         borderRadius: '20px',
-        background: 'rgba(22, 22, 31, 0.45)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        background: 'var(--bg-card)',
+        border: 'var(--border-warm)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         boxShadow: 'var(--glass-shadow)',
@@ -169,10 +169,10 @@ export const MusicExhibit: React.FC<MusicExhibitProps> = ({ src, title, artistNa
           🎵
         </div>
         <div style={{ flex: 1 }}>
-          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#f8fafc' }}>
+          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: 'var(--text-dark)' }}>
             {title}
           </h3>
-          <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: '#94a3b8' }}>
+          <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: 'var(--text-muted)' }}>
             {artistName}
           </p>
         </div>

@@ -1,83 +1,42 @@
-/* Kulthera mint theme — matches reference mockups */
+/* Auth & creator workspace — warm light (aligned with tribal theme) */
 
 :root {
-  --mint: #7dffc9;
-  --mint-dim: rgba(125, 255, 201, 0.15);
-  --mint-border: rgba(125, 255, 201, 0.45);
-  --surface-dark: #0a0f0d;
-  --surface-card: #111916;
-  --surface-elevated: #161f1b;
+  --mint: var(--mint-accent, #3d9b7a);
+  --mint-dim: var(--mint-soft, #d4f0e4);
+  --mint-border: rgba(61, 155, 122, 0.4);
+  --surface-dark: var(--sand, #faf6f0);
+  --surface-card: var(--cream, #fffdf9);
+  --surface-elevated: var(--sand-deep, #f0e6d8);
 }
 
 .page-mint {
-  background: var(--surface-dark);
-  color: #f8fafc;
+  background: var(--sand);
+  color: var(--text-dark);
   min-height: 100vh;
 }
 
 .mint-kicker {
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mint);
-  margin-bottom: 8px;
+  color: var(--terracotta);
 }
 
 .mint-input,
 .mint-textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--mint-border);
-  background: #0d1210;
-  color: #f8fafc;
-  font-size: 0.95rem;
-  font-family: inherit;
-}
-
-.mint-textarea {
-  resize: vertical;
-  min-height: 100px;
+  border: var(--border-warm);
+  background: var(--cream);
+  color: var(--text-dark);
 }
 
 .mint-btn-primary {
-  width: 100%;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 12px;
-  background: var(--mint);
-  color: #0a0f0d;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 8px;
-}
-
-.mint-btn-primary:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
+  background: var(--mint-soft);
+  color: var(--text-dark);
+  border: 2px solid var(--mint-accent);
 }
 
 .mint-btn-outline {
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--mint-border);
-  background: transparent;
-  color: var(--mint);
-  font-size: 0.85rem;
-  cursor: pointer;
+  border-color: var(--terracotta);
+  color: var(--terracotta);
 }
 
-.field-label {
-  display: block;
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--mint);
-  margin: 16px 0 8px;
-}
-
-/* Auth — centered gateway */
 .auth-gateway {
   min-height: 100vh;
   display: flex;
@@ -85,268 +44,115 @@
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
-  background: #050807;
+  background: var(--sand);
+  position: relative;
+}
+
+.auth-gateway::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-tribal);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.14;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.auth-gateway > * {
+  position: relative;
+  z-index: 1;
 }
 
 .auth-gateway-brand h1 {
   font-size: clamp(2rem, 6vw, 2.75rem);
   font-weight: 800;
-  color: #fff;
+  color: var(--terracotta-deep);
   text-align: center;
-  margin-bottom: 8px;
 }
 
 .auth-gateway-tagline {
-  color: var(--mint);
+  color: var(--terracotta);
   text-align: center;
   margin-bottom: 32px;
-  font-size: 1rem;
 }
 
 .auth-gateway-card {
   width: 100%;
   max-width: 420px;
   padding: 28px 24px;
-  border-radius: 16px;
-  background: var(--surface-card);
-  border: 1px solid var(--mint-border);
-}
-
-.role-toggle-mint {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  margin-bottom: 24px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--mint-border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: var(--border-warm);
+  box-shadow: var(--shadow-md);
 }
 
 .role-toggle-mint button {
-  padding: 14px 10px;
-  border: none;
-  background: #0a0f0d;
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
+  background: var(--sand-deep);
+  color: var(--text-muted);
 }
 
 .role-toggle-mint button.active {
-  background: var(--mint);
-  color: #0a0f0d;
+  background: var(--mint-soft);
+  color: var(--text-dark);
+  border-color: var(--mint-accent);
 }
 
-.auth-gateway-footer {
-  margin-top: 16px;
-  font-size: 0.75rem;
-  color: #64748b;
-  text-align: center;
-  line-height: 1.5;
-}
-
-/* Creator workspace */
 .creator-workspace {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 20px 16px 60px;
-}
-
-.creator-workspace-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 32px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--mint-border);
-}
-
-.creator-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.creator-brand-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: var(--mint);
-  color: #0a0f0d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-}
-
-.creator-brand-title {
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.creator-brand-sub {
-  font-size: 0.8rem;
-  color: #94a3b8;
-}
-
-.creator-stats-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
+  background: transparent;
 }
 
 .creator-stat-card {
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid var(--mint-border);
-  background: var(--surface-card);
+  background: var(--bg-card);
+  border: var(--border-warm);
 }
 
 .creator-stat-card h3 {
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--mint);
-  margin-bottom: 12px;
+  color: var(--terracotta);
 }
 
 .creator-stat-value {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #fff;
-}
-
-.creator-stat-split {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  color: var(--text-dark);
 }
 
 .creator-stat-split div strong {
-  display: block;
-  font-size: 1.5rem;
-  color: var(--mint);
-}
-
-.creator-stat-split div span {
-  font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--mint-accent);
 }
 
 .upload-pipeline {
-  padding: 24px;
-  border-radius: 12px;
-  border: 1px solid var(--mint-border);
-  background: var(--surface-card);
-  margin-bottom: 32px;
-}
-
-.upload-pipeline h2 {
-  font-size: 1.35rem;
-  margin-bottom: 4px;
-}
-
-.upload-pipeline-sub {
-  color: #94a3b8;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
+  background: var(--bg-card);
+  border: var(--border-warm);
 }
 
 .upload-dropzone {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 140px;
-  border: 2px dashed var(--mint-border);
-  border-radius: 12px;
-  cursor: pointer;
-  color: var(--mint);
-  padding: 20px;
-  text-align: center;
+  border-color: var(--ochre);
+  color: var(--terracotta);
+  background: var(--sand);
 }
 
-.upload-hint {
-  font-size: 0.75rem;
-  color: #64748b;
+.field-label {
+  color: var(--terracotta);
 }
 
-.upload-success {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--mint);
-  font-size: 0.9rem;
-  margin-top: 12px;
+.art-style-chip {
+  border: var(--border-light);
+  background: var(--cream);
+  color: var(--text-muted);
 }
 
-.exhibit-rows h2 {
-  font-size: 1.25rem;
-  margin-bottom: 16px;
+.art-style-chip.selected {
+  border-color: var(--ochre);
+  background: rgba(232, 168, 56, 0.15);
+  color: var(--text-dark);
 }
 
-.exhibit-row {
-  display: grid;
-  grid-template-columns: 72px 1fr auto;
-  gap: 16px;
-  align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+.onboarding-modal {
+  background: var(--cream);
+  border: var(--border-warm);
+  color: var(--text-dark);
 }
 
-@media (max-width: 640px) {
-  .exhibit-row {
-    grid-template-columns: 56px 1fr;
-    grid-template-rows: auto auto;
-  }
-
-  .exhibit-row-stats {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-}
-
-.exhibit-row-thumb {
-  width: 72px;
-  height: 56px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.exhibit-row-title {
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.exhibit-row-by {
-  font-size: 0.85rem;
-  color: #94a3b8;
-}
-
-.exhibit-row-stats {
-  text-align: right;
-  font-size: 0.8rem;
-  color: #94a3b8;
-}
-
-.exhibit-row-earnings {
-  color: var(--mint);
-  font-weight: 700;
-  font-size: 1rem;
-}
-
-.badge-pending {
-  display: inline-block;
-  font-size: 0.65rem;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
-  margin-left: 8px;
+.onboarding-overlay {
+  background: rgba(42, 31, 24, 0.5);
 }
