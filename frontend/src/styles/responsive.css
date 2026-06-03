@@ -1,0 +1,104 @@
+/* Global responsive utilities */
+
+.container-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: clamp(12px, 4vw, 24px);
+  padding-right: clamp(12px, 4vw, 24px);
+}
+
+/* Split exhibit view (gallery / stream) */
+.exhibit-split {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
+  min-height: calc(100vh - 64px);
+}
+
+@media (max-width: 900px) {
+  .exhibit-split {
+    grid-template-columns: 1fr;
+  }
+
+  .exhibit-split-panel {
+    order: 2;
+  }
+
+  .exhibit-split-media {
+    order: 1;
+    min-height: 50vh;
+  }
+}
+
+/* Home lobby rooms */
+.rooms-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .rooms-grid-responsive {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sound roots layout */
+.soundroots-layout-responsive {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+@media (max-width: 900px) {
+  .soundroots-layout-responsive {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Gallery grid */
+.gallery-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 0 16px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+  .gallery-grid-responsive {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Lightbox stacks on mobile */
+@media (max-width: 768px) {
+  .lightbox-content {
+    flex-direction: column !important;
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+
+  .lightbox-image-wrapper {
+    max-height: 45vh;
+  }
+}
+
+/* Dashboard header actions */
+.creator-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Prevent horizontal scroll */
+img,
+video,
+audio {
+  max-width: 100%;
+}

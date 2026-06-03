@@ -1,174 +1,230 @@
-/**
- * Creator Dashboard Page
- * 
- * Shows creator-specific analytics:
- * - Total earnings & visitor count
- * - Per-exhibit performance
- * - Real-time activity
- * - Wallet address management
- * 
- * Protected route: Only authenticated creators can access
- */
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { ContentUploadPipeline } from '../components/creator/ContentUploadPipeline';
+import {
+  getMockCreatorForUser,
+  formatDuration,
+} from '../data/mockCreators';
+import type { CreatorProfile, CreatorWork, CreatorUploadDraft } from '../types/creator';
+import {
+  loadPendingUploads,
+  savePendingUpload,
+  draftToWork,
+  loadPaymentPointer,
+  savePaymentPointer,
+} from '../services/creatorStorage';
 import { fetchCreatorAnalytics, fetchCreatorProfile } from '../utils/apiService';
-import { BarChart3, Users, DollarSign, Clock, MapPin, Mail } from 'lucide-react';
-import '../styles/dashboard.css';
+import '../styles/kulthera-mint.css';
+import '../styles/responsive.css';
 
 export const CreatorDashboardPage: React.FC = () => {
-  const [analytics, setAnalytics] = useState<any>(null);
-  const [profile, setProfile] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+  const [profile, setProfile] = useState<CreatorProfile | null>(null);
+  const [paymentPointer, setPaymentPointer] = useState('');
+  const [pendingWorks, setPendingWorks] = useState<CreatorWork[]>([]);
+
+  const userId = user?.id?.toString() || user?.email || 'guest';
 
   useEffect(() => {
-    const loadData = async () => {
+    if (!user) return;
+
+    const load = async () => {
+      let base = getMockCreatorForUser(user.email, user.name);
+
       try {
-        setIsLoading(true);
-        const [analyticsData, profileData] = await Promise.all([
-          fetchCreatorAnalytics(),
-          fetchCreatorProfile(),
-        ]);
-        setAnalytics(analyticsData);
-        setProfile(profileData);
-      } catch (err) {
-        setError('Could not load dashboard data. Please try again.');
-        console.error(err);
-      } finally {
-        setIsLoading(false);
+        const apiProfile = await fetchCreatorProfile();
+        base = {
+          ...base,
+          name: apiProfile.name || base.name,
+          avatarUrl: apiProfile.avatarUrl || base.avatarUrl,
+          paymentPointer: apiProfile.paymentPointer || apiProfile.walletAddress || base.paymentPointer,
+        };
+        const analytics = await fetchCreatorAnalytics();
+        if (analytics.totalEarnings) {
+          base.webMonetizationUsd = analytics.totalEarnings;
+        }
+      } catch {
+        /* use mock */
       }
+
+      const pointer = loadPaymentPointer(userId, base.paymentPointer);
+      setPaymentPointer(pointer);
+      setProfile(base);
+
+      const uploads = loadPendingUploads(userId).map(draftToWork);
+      setPendingWorks(uploads);
     };
 
-    loadData();
-  }, []);
+    load();
+  }, [user, userId]);
 
-  if (isLoading) {
-    return (
-      <div className="dashboard-container loading">
-        <div className="loading-spinner"></div>
-        <p>Loading your analytics...</p>
-      </div>
-    );
-  }
+  const allWorks = useMemo(() => {
+    if (!profile) return pendingWorks;
+    return [...pendingWorks, ...profile.works];
+  }, [profile, pendingWorks]);
 
-  if (error) {
+  const handleUpload = (draft: Omit<CreatorUploadDraft, 'id' | 'submittedAt' | 'status'>) => {
+    const full: CreatorUploadDraft = {
+      ...draft,
+      id: `upload-${Date.now()}`,
+      submittedAt: new Date().toISOString(),
+      status: 'pending_review',
+    };
+    savePendingUpload(full, userId);
+    setPendingWorks((prev) => [draftToWork(full), ...prev]);
+  };
+
+  const savePointer = () => {
+    savePaymentPointer(userId, paymentPointer);
+  };
+
+  if (!user || !profile) {
     return (
-      <div className="dashboard-container error">
-        <p className="error-message">{error}</p>
+      <div className="page-mint creator-workspace">
+        <p>Loading workspace...</p>
       </div>
     );
   }
 
   return (
-    <div className="dashboard-container">
-      {/* Header */}
-      <div className="dashboard-header">
-        <h1>Creator Analytics Dashboard</h1>
-        <p>Track your exhibit performance and earnings</p>
-      </div>
-
-      {profile && (
-        <div className="profile-card glass-panel">
-          <img src={profile.avatarUrl} alt={profile.name} className="profile-avatar" />
-          <div className="profile-info">
-            <h2>{profile.name}</h2>
-            <p className="profile-role">{profile.bio}</p>
-            <div className="profile-details">
-              <span>
-                <MapPin size={14} /> {profile.country}
-              </span>
-              {profile.email && (
-                <span>
-                  <Mail size={14} /> {profile.email}
-                </span>
-              )}
+    <div className="page-mint">
+      <div className="creator-workspace">
+        <header className="creator-workspace-header">
+          <div className="creator-brand">
+            <div className="creator-brand-icon">K</div>
+            <div>
+              <div className="creator-brand-title">Kulthera</div>
+              <div className="creator-brand-sub">Creator Workspace</div>
             </div>
           </div>
-          <div className="wallet-info">
-            <p className="wallet-label">Wallet Address</p>
-            <p className="wallet-address">{profile.walletAddress?.slice(0, 20)}...</p>
+          <div className="creator-header-actions">
+            <button type="button" className="mint-btn-outline" onClick={() => navigate('/')}>
+              Museum lobby
+            </button>
+            <button type="button" className="mint-btn-outline" onClick={logout}>
+              Logout
+            </button>
           </div>
-        </div>
-      )}
+        </header>
 
-      {analytics && (
-        <>
-          {/* Summary Stats */}
-          <div className="stats-grid">
-            <div className="stat-card">
-              <Users size={24} className="stat-icon" />
-              <h3>Total Visitors</h3>
-              <p className="stat-value">{analytics.totalVisitors}</p>
-            </div>
+        <p className="mint-kicker">Creator management dashboard</p>
+        <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', marginBottom: 24, lineHeight: 1.3 }}>
+          Track success, control funds, and prepare exhibits for review.
+        </h1>
 
-            <div className="stat-card">
-              <Clock size={24} className="stat-icon" />
-              <h3>Total Watch Time</h3>
-              <p className="stat-value">
-                {Math.floor(analytics.totalViewTime / 3600)}h{' '}
-                {Math.floor((analytics.totalViewTime % 3600) / 60)}m
-              </p>
-            </div>
-
-            <div className="stat-card highlight">
-              <DollarSign size={24} className="stat-icon" />
-              <h3>Total Earnings</h3>
-              <p className="stat-value">${analytics.totalEarnings.toFixed(2)}</p>
-            </div>
-
-            <div className="stat-card">
-              <BarChart3 size={24} className="stat-icon" />
-              <h3>Active Exhibits</h3>
-              <p className="stat-value">{analytics.exhibitPerformance?.length || 0}</p>
-            </div>
+        <div className="creator-stats-row">
+          <div className="creator-stat-card">
+            <h3>Total minutes streamed</h3>
+            <p className="creator-stat-value">{profile.minutesStreamed}</p>
           </div>
-
-          {/* Per-Exhibit Breakdown */}
-          {analytics.exhibitPerformance && analytics.exhibitPerformance.length > 0 && (
-            <div className="exhibits-section">
-              <h2>Your Exhibits</h2>
-              <div className="exhibits-table">
-                <div className="table-header">
-                  <div className="col-title">Exhibit</div>
-                  <div className="col-stat">Visitors</div>
-                  <div className="col-stat">Watch Time</div>
-                </div>
-
-                {analytics.exhibitPerformance.map((exhibit: any) => (
-                  <div key={exhibit.exhibitId} className="table-row">
-                    <div className="col-title">{exhibit.exhibitTitle}</div>
-                    <div className="col-stat">{exhibit.viewCount}</div>
-                    <div className="col-stat">
-                      {Math.floor(exhibit.totalTime / 60)}m {exhibit.totalTime % 60}s
-                    </div>
-                  </div>
-                ))}
+          <div className="creator-stat-card">
+            <h3>Earnings summary</h3>
+            <div className="creator-stat-split">
+              <div>
+                <strong>${profile.webMonetizationUsd.toFixed(2)}</strong>
+                <span>Web Monetization streams</span>
+              </div>
+              <div>
+                <strong>${profile.directTipsUsd.toFixed(2)}</strong>
+                <span>Direct tips received</span>
               </div>
             </div>
-          )}
+          </div>
+          <div className="creator-stat-card">
+            <h3>Payment pointer</h3>
+            <input
+              type="text"
+              className="mint-input"
+              value={paymentPointer}
+              onChange={(e) => setPaymentPointer(e.target.value)}
+              onBlur={savePointer}
+              placeholder="$ilp.uphold.com/yourname"
+            />
+            <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: 8 }}>
+              Paste your Interledger wallet / payment pointer here.
+            </p>
+          </div>
+        </div>
 
-          {/* Info Cards */}
-          <div className="info-cards">
-            <div className="info-card">
-              <h3>🌐 What's Next?</h3>
-              <p>
-                Advanced analytics coming soon: audience demographics, geographic reach,
-                and engagement trends.
+        <ContentUploadPipeline onSubmit={handleUpload} />
+
+        <section className="exhibit-rows">
+          <h2>Your exhibits</h2>
+          <p style={{ color: '#94a3b8', marginBottom: 16, fontSize: '0.9rem' }}>
+            Analytics stored locally for demo. New uploads appear with pending review status.
+          </p>
+
+          {allWorks.length === 0 ? (
+            <p style={{ color: '#64748b' }}>No exhibits yet — upload your first work above.</p>
+          ) : (
+            allWorks.map((work) => (
+              <ExhibitRow key={work.id} work={work} creatorName={profile.name} />
+            ))
+          )}
+        </section>
+
+        <section style={{ marginTop: 32 }}>
+          <h2 style={{ fontSize: '1.1rem', marginBottom: 12 }}>Aggregate (mock)</h2>
+          <div className="creator-stats-row">
+            <div className="creator-stat-card">
+              <h3>Total views</h3>
+              <p className="creator-stat-value">{profile.totalViews}</p>
+            </div>
+            <div className="creator-stat-card">
+              <h3>Time spent</h3>
+              <p className="creator-stat-value" style={{ fontSize: '1.5rem' }}>
+                {formatDuration(profile.totalAttentionSeconds)}
               </p>
             </div>
-
-            <div className="info-card">
-              <h3>💡 Monetization Tips</h3>
-              <p>
-                Share your Kulthera exhibit link on social media. Longer engagement = more
-                support. Quality content attracts dedicated supporters.
+            <div className="creator-stat-card">
+              <h3>Monetized time</h3>
+              <p className="creator-stat-value" style={{ fontSize: '1.5rem' }}>
+                {formatDuration(profile.totalMonetizedSeconds)}
               </p>
             </div>
           </div>
-        </>
-      )}
+        </section>
+      </div>
     </div>
   );
 };
+
+function ExhibitRow({ work, creatorName }: { work: CreatorWork; creatorName: string }) {
+  const isAudio = work.mediaType === 'audio';
+
+  return (
+    <div className="exhibit-row">
+      <img src={work.thumbnailUrl} alt="" className="exhibit-row-thumb" />
+      <div>
+        <p className="exhibit-row-title">
+          {work.title}
+          {work.status === 'pending_review' && (
+            <span className="badge-pending">Pending review</span>
+          )}
+        </p>
+        <p className="exhibit-row-by">
+          by {creatorName} · {work.roomName}
+          {isAudio && ' · 🎵 Audio'}
+        </p>
+        {isAudio && work.mediaUrl && (
+          <audio
+            controls
+            preload="metadata"
+            src={work.mediaUrl}
+            style={{ width: '100%', maxWidth: 320, marginTop: 8, height: 36 }}
+          />
+        )}
+      </div>
+      <div className="exhibit-row-stats">
+        <div>{work.views} views</div>
+        <div>{formatDuration(work.attentionSeconds)} attention</div>
+        <div>{formatDuration(work.monetizedSeconds)} monetized</div>
+        <div className="exhibit-row-earnings">${work.testSupportUsd.toFixed(2)} test</div>
+      </div>
+    </div>
+  );
+}
 
 export default CreatorDashboardPage;

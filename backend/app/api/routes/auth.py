@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from typing import Optional
 import jwt
 from datetime import datetime, timedelta
@@ -16,9 +16,14 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 # ============================================
 
 class SignupRequest(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
     email: EmailStr
     password: str
     name: str
+    is_creator: bool = Field(False, alias="isCreator")
+    preferred_styles: Optional[list[str]] = Field(None, alias="preferredStyles")
+    creator_style: Optional[str] = Field(None, alias="creatorStyle")
 
 
 class LoginRequest(BaseModel):
@@ -96,13 +101,16 @@ async def signup(request: SignupRequest, db: AsyncSession = Depends(get_db)):
     user_id = NEXT_USER_ID
     NEXT_USER_ID += 1
     
+    creator_id = user_id if request.is_creator else None
     STORED_USERS[request.email] = {
         "id": user_id,
         "email": request.email,
         "password_hash": request.password,  # TODO: bcrypt in production
         "name": request.name,
-        "isCreator": False,
-        "creatorId": None
+        "isCreator": request.is_creator,
+        "creatorId": creator_id,
+        "preferred_styles": request.preferred_styles or [],
+        "creator_style": request.creator_style,
     }
     
     # Generate JWT token
@@ -126,8 +134,8 @@ async def signup(request: SignupRequest, db: AsyncSession = Depends(get_db)):
             id=user_id,
             email=request.email,
             name=request.name,
-            isCreator=False,
-            creatorId=None
+            isCreator=request.is_creator,
+            creatorId=creator_id
         )
     )
 

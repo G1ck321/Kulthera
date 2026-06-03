@@ -45,8 +45,8 @@ export const MusicExhibit: React.FC<MusicExhibitProps> = ({ src, title, artistNa
         setBlobSrc(activeUrl);
         setIsLoading(false);
       } catch (err: any) {
-        console.error('[AssetSecurity] Failed loading protected audio stream:', err);
-        setLoadError('Failed to establish secure audio stream buffer.');
+        console.warn('[MusicExhibit] Blob fetch failed, using direct URL:', err);
+        setBlobSrc(src);
         setIsLoading(false);
       }
     };
@@ -146,9 +146,9 @@ export const MusicExhibit: React.FC<MusicExhibitProps> = ({ src, title, artistNa
       }}
       onContextMenu={(e) => e.preventDefault()} // Secure context-menu shielding
     >
-      {/* Hidden audio element binding masked source */}
-      {blobSrc && (
-        <audio ref={audioRef} src={blobSrc} preload="auto" />
+      {/* Hidden audio element — blob URL or direct stream */}
+      {(blobSrc || src) && (
+        <audio ref={audioRef} src={blobSrc || src} preload="metadata" crossOrigin="anonymous" />
       )}
 
       {/* Album Layout / Display Info */}

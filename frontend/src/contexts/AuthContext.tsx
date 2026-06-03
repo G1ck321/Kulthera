@@ -41,7 +41,12 @@ interface AuthContextType {
   
   // Auth actions
   login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, name: string) => Promise<void>;
+  signup: (
+    email: string,
+    password: string,
+    name: string,
+    options?: { isCreator?: boolean; preferredStyles?: string[]; creatorStyle?: string }
+  ) => Promise<void>;
   logout: () => void;
   clearError: () => void;
 }
@@ -141,16 +146,34 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
    * signup: Create new user account
    * Similar to login, but also takes user's name
    */
-  const signup = async (email: string, password: string, name: string) => {
+  const signup = async (
+    email: string,
+    password: string,
+    name: string,
+    options?: { isCreator?: boolean; preferredStyles?: string[]; creatorStyle?: string }
+  ) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await authSignup({ email, password, name });
+      const response = await authSignup({
+        email,
+        password,
+        name,
+        isCreator: options?.isCreator,
+        preferredStyles: options?.preferredStyles,
+        creatorStyle: options?.creatorStyle,
+      });
 
       // Success! Store token and auto-login
       localStorage.setItem('authToken', response.token);
       localStorage.setItem('authUser', JSON.stringify(response.user));
+      if (options?.preferredStyles?.length) {
+        localStorage.setItem('preferredArtStyles', JSON.stringify(options.preferredStyles));
+      }
+      if (options?.creatorStyle) {
+        localStorage.setItem('creatorStyle', options.creatorStyle);
+      }
 
       setUser(response.user);
     } catch (err) {

@@ -12,18 +12,45 @@
  * Design pattern: Grid → Click to expand → Show creator info + monetization
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchExhibits, Exhibit } from '../utils/apiService';
 import { MonetizationStatus } from '../components/MonetizationStatus';
-import { X, MapPin } from 'lucide-react';
+import { ExhibitEntryModal } from '../components/ExhibitEntryModal';
+import { TipCreatorButton } from '../components/TipCreatorButton';
+import { WelcomeArtRoomModal } from '../components/onboarding/WelcomeArtRoomModal';
+import { X, MapPin, DoorOpen } from 'lucide-react';
 import '../styles/gallery.css';
+import '../styles/onboarding.css';
 
 export const GalleryPage: React.FC = () => {
   const [exhibits, setExhibits] = useState<Exhibit[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [pendingExhibit, setPendingExhibit] = useState<Exhibit | null>(null);
   const [selectedExhibit, setSelectedExhibit] = useState<Exhibit | null>(null);
   const [filter, setFilter] = useState<'all' | 'painting' | 'artifact' | 'story'>('all');
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  const artistRooms = useMemo(() => {
+    const byCreator = new Map<string, Exhibit[]>();
+    exhibits
+      .filter((e) => e.mediaType === 'painting')
+      .forEach((e) => {
+        const key = e.creator.name;
+        if (!byCreator.has(key)) byCreator.set(key, []);
+        byCreator.get(key)!.push(e);
+      });
+    return Array.from(byCreator.entries()).filter(([, list]) => list.length >= 2);
+  }, [exhibits]);
+
+  useEffect(() => {
+    const styles = localStorage.getItem('preferredArtStyles');
+    const welcomeSeen = localStorage.getItem('kultr_welcome_seen');
+    if (styles && !welcomeSeen) {
+      setShowWelcome(true);
+    }
+  }, []);
 
   /**
    * Load all visual exhibits (paintings, artifacts, stories)
@@ -73,13 +100,35 @@ export const GalleryPage: React.FC = () => {
     );
   }
 
+  const slugify = (name: string) =>
+    name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
   return (
     <div className="gallery-container">
-      {/* Web Monetization Status - Show when exhibit is selected */}
+      <WelcomeArtRoomModal
+        open={showWelcome}
+        onEnter={() => {
+          localStorage.setItem('kultr_welcome_seen', '1');
+          setShowWelcome(false);
+        }}
+      />
+
+      {pendingExhibit && !selectedExhibit && (
+        <ExhibitEntryModal
+          exhibit={pendingExhibit}
+          onEnter={() => {
+            setSelectedExhibit(pendingExhibit);
+            setPendingExhibit(null);
+          }}
+          onCancel={() => setPendingExhibit(null)}
+        />
+      )}
+
       {selectedExhibit && selectedExhibit.creator.paymentPointer && (
         <MonetizationStatus
           creatorName={selectedExhibit.creator.name}
           paymentPointer={selectedExhibit.creator.paymentPointer}
+          showTimer
         />
       )}
       {/* Header */}
@@ -91,7 +140,27 @@ export const GalleryPage: React.FC = () => {
         </p>
       </div>
 
-      {/* Filter tabs */}
+      {artistRooms.length > 0 && (
+        <section className="artist-rooms-strip">
+          <h2>Artist Rooms</h2>
+          <p>Step inside — each room holds multiple works in a carousel.</p>
+          <div className="artist-rooms-list">
+            {artistRooms.map(([name, list]) => (
+              <Link
+                key={name}
+                to={`/room/${slugify(name)}`}
+                className="artist-room-card"
+              >
+                <img src={list[0].previewUrl || list[0].mediaUrl} alt={name} />
+                <span>{name}</span>
+                <span className="room-count">{list.length} works</span>
+                <DoorOpen size={16} />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       <div className="gallery-filters">
         <button
           className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
@@ -120,12 +189,12 @@ export const GalleryPage: React.FC = () => {
       </div>
 
       {/* Gallery grid */}
-      <div className="gallery-grid">
+      <div className="gallery-grid gallery-grid-responsive">
         {filteredExhibits.map((exhibit) => (
           <div
             key={exhibit.id}
             className="gallery-card"
-            onClick={() => setSelectedExhibit(exhibit)}
+            onClick={() => setPendingExhibit(exhibit)}
           >
             <div className="card-image-wrapper">
               <img
@@ -221,9 +290,14 @@ export const GalleryPage: React.FC = () => {
 
               {/* Action buttons */}
               <div className="lightbox-actions">
-                <button className="btn-support">
-                  💰 Support This Creator
-                </button>
+                <TipCreatorButton creatorName={selectedExhibit.creator.name} />
+                <Link
+                  to={`/room/${slugify(selectedExhibit.creator.name)}`}
+                  className="btn-support"
+                  style={{ textDecoration: 'none', textAlign: 'center' }}
+                >
+                  Visit full room
+                </Link>
                 <button
                   className="btn-close-secondary"
                   onClick={() => setSelectedExhibit(null)}

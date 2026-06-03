@@ -164,6 +164,21 @@ EXHIBITS_SEED = [
     {
         "room_slug": "painted-memory",
         "creator_name": "Amina Bello",
+        "title": "Horizon Lines at Agadez",
+        "description": "A minimalist horizon study using layered ochre washes and indigo dusk tones from the Sahel skyline.",
+        "cultural_context": "Agadez has long been a crossroads for traders and artists; horizon paintings document seasonal light shifts that guide caravan calendars.",
+        "media_type": "painting",
+        "media_url": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&q=80&w=800",
+        "preview_url": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&q=80&w=80&blur=10",
+        "country": "Niger",
+        "region": "Agadez",
+        "language_code": "ha",
+        "tags": ["painting", "horizon", "sahel"],
+        "display_order": 3
+    },
+    {
+        "room_slug": "painted-memory",
+        "creator_name": "Amina Bello",
         "title": "Market Day Intersections",
         "description": "A complex layered digital illustration reflecting the color and motion density of trading days.",
         "cultural_context": "Market days (Ahia) are major socio-economic and spiritual pillars across West Africa, determining community calendars and communal exchanges.",

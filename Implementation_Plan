@@ -54,6 +54,15 @@ CreatorDashboardPage.tsx
 Integrate backend data fetching utilizing the /dashboard/creators/me endpoint.
 Conversion Rate: Add metrics showing "Visitors vs Supporters" (e.g., total views vs monetized views) and the estimated average time spent per user.
 Translation by Location: Add a toggle or display panel that translates the USD earnings into a local African currency (e.g., NGN, GHS, XOF) using a fixed conversion rate for MVP demonstration purposes, proving localization viability.
+Judge & Investor Feasibility
+See `JUDGE_FEASIBILITY_REPORT.md` for: what to cut, six keepers for judges, pitch must-haves, and likely Q&A.
+
+MVP Onboarding & Rooms (implemented in frontend)
+- Enthusiast signup: art style picker → welcome “Art Room” modal
+- Creator signup: style question + image/audio upload UI (demo/local)
+- Artist rooms: `/room/:creatorSlug` carousel (2+ paintings per creator)
+- Demo stream timer + Tip Creator on gallery, rooms, and Sound Roots
+
 Verification Plan
 Automated/Local Tests
 Run npm run build to ensure no TypeScript regressions.

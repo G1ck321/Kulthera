@@ -19,6 +19,7 @@ import React, { useState, useEffect } from 'react';
 import { Clock } from 'lucide-react';
 import { fetchExhibits, Exhibit } from '../utils/apiService';
 import { MonetizationStatus } from '../components/MonetizationStatus';
+import { TipCreatorButton } from '../components/TipCreatorButton';
 import { MusicExhibit } from '../components/MusicExhibit';
 import '../styles/soundRoots.css';
 
@@ -125,9 +126,10 @@ export const SoundRootsPage: React.FC = () => {
     <div className="soundroots-container">
       {/* Web Monetization Status - Only show when music is actively playing */}
       {currentPlaying && displayedExhibit && displayedExhibit.creator.paymentPointer && (
-        <MonetizationStatus 
+        <MonetizationStatus
           creatorName={displayedExhibit.creator.name}
           paymentPointer={displayedExhibit.creator.paymentPointer}
+          showTimer
         />
       )}
       {/* Hero section: Title + intro */}
@@ -144,7 +146,7 @@ export const SoundRootsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="soundroots-layout">
+      <div className="soundroots-layout soundroots-layout-responsive">
         {/* Main Player Section */}
         <div className="soundroots-player">
           {displayedExhibit && (
@@ -184,6 +186,9 @@ export const SoundRootsPage: React.FC = () => {
                       <span className="stat-label">Origin</span>
                     </div>
                   </div>
+                  {currentPlaying === displayedExhibit.id && (
+                    <TipCreatorButton creatorName={displayedExhibit.creator.name} />
+                  )}
                 </div>
               </div>
             </div>

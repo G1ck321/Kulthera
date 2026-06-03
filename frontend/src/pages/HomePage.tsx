@@ -14,7 +14,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Music, Palette, Zap, ArrowRight } from 'lucide-react';
+import { MUSEUM_ROOMS } from '../data/mockCreators';
 import '../styles/home.css';
+import '../styles/responsive.css';
 
 export const HomePage: React.FC = () => {
   return (
@@ -44,48 +46,30 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Rooms / Sections */}
-      <section className="rooms-section">
-        <h2>Explore Our Rooms</h2>
-        <div className="rooms-grid">
-          {/* Sound Roots Room */}
-          <Link to="/music" className="room-card">
-            <div className="room-icon">🎵</div>
-            <h3>Sound Roots</h3>
-            <p>
-              Traditional African music, griot performances, and contemporary artists.
-              Feel the rhythm of heritage.
-            </p>
-            <div className="room-footer">
-              <Music size={16} />
-              <span>12+ Exhibits</span>
-            </div>
-          </Link>
-
-          {/* Gallery Room */}
-          <Link to="/gallery" className="room-card">
-            <div className="room-icon">🎨</div>
-            <h3>Art Gallery</h3>
-            <p>
-              Paintings, sculptures, textiles, and visual artifacts celebrating
-              African artistic traditions.
-            </p>
-            <div className="room-footer">
-              <Palette size={16} />
-              <span>18+ Exhibits</span>
-            </div>
-          </Link>
-
-          {/* Explore Room (Future) */}
-          <Link to="/explore" className="room-card coming-soon">
-            <div className="room-icon">🌍</div>
-            <h3>Explore by Region</h3>
-            <p>
-              Discover exhibits by African region, language, tradition, and culture.
-            </p>
-            <div className="room-footer">
-              <span className="badge">Coming Soon</span>
-            </div>
-          </Link>
+      <section className="rooms-section container-page">
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
+          <h2>Museum Rooms</h2>
+          <p style={{ color: 'rgba(245,241,232,0.6)', fontSize: '0.9rem' }}>Choose a room to begin the stream.</p>
+        </div>
+        <div className="rooms-grid rooms-grid-responsive">
+          {MUSEUM_ROOMS.map((room) => {
+            const href = room.slug === 'sound-roots' ? '/music' : '/gallery';
+            return (
+              <Link key={room.slug} to={href} className="room-card">
+                <div className="room-icon">
+                  {room.slug === 'sound-roots' ? '🎵' : room.slug === 'painted-memory' ? '🎨' : room.slug === 'artifact-house' ? '🏛️' : '📖'}
+                </div>
+                <h3>{room.name}</h3>
+                <p>
+                  {room.exhibits} exhibits · {room.visitors} visitors now
+                </p>
+                <div className="room-footer">
+                  {room.slug === 'sound-roots' ? <Music size={16} /> : <Palette size={16} />}
+                  <span>Enter room</span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

@@ -4,6 +4,8 @@ import { Sparkles, ShieldCheck } from 'lucide-react';
 interface MonetizationStatusProps {
   creatorName: string;
   paymentPointer: string;
+  showTimer?: boolean;
+  onTip?: (amountUsd: number) => void;
 }
 
 /**
@@ -12,16 +14,21 @@ interface MonetizationStatusProps {
  * For the MVP, this uses a steady static counter to simulate engagement value being generated,
  * as actual ILP transactions are handled out-of-band via a Node.js test wallet.
  */
-export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({ creatorName, paymentPointer }) => {
+export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
+  creatorName,
+  paymentPointer,
+  showTimer = true,
+}) => {
   const [simulatedSupport, setSimulatedSupport] = useState<number>(0);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   useEffect(() => {
-    // Trigger localized showcase simulation interval
     setSimulatedSupport(0);
+    setElapsedSeconds(0);
 
     const interval = setInterval(() => {
-      // Accumulate mock streaming micro-value ($0.0001 per second)
       setSimulatedSupport((prev) => prev + 0.0001);
+      setElapsedSeconds((prev) => prev + 1);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -139,6 +146,12 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({ creatorN
             <span>${activeAmount.toFixed(5)}</span>
             <span style={{ fontSize: '10px', color: '#64748b', fontWeight: 500 }}>USD</span>
           </div>
+
+          {showTimer && (
+            <p className="monetization-elapsed" style={{ margin: '6px 0 0', fontSize: '11px', color: '#64748b' }}>
+              Demo stream: {formatElapsed(elapsedSeconds)} elapsed
+            </p>
+          )}
           
           {/* Security & Verification tag */}
           <div 
@@ -171,4 +184,11 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({ creatorN
     </div>
   );
 };
+
+function formatElapsed(seconds: number): string {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
 export default MonetizationStatus;

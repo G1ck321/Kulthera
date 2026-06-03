@@ -1,22 +1,20 @@
 /**
- * Login / Signup Component
- * 
- * Unified authentication page for both login and signup flows
- * 
- * Design principle: Keep it simple for MVP
- * - Email + password only (no social login, no OAuth)
- * - Client-side validation for better UX
- * - Smooth toggle between login/signup modes
- * - Clear error messaging
+ * Kulthera auth gateway — Visitor vs Creator (reference UI)
  */
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Mail, Lock, User, Loader } from 'lucide-react';
-import '../styles/auth.css';
+import { Loader } from 'lucide-react';
+import { ArtStylePicker } from '../components/onboarding/ArtStylePicker';
+import { WelcomeArtRoomModal } from '../components/onboarding/WelcomeArtRoomModal';
+import { CreatorOnboardingPanel } from '../components/onboarding/CreatorOnboardingPanel';
+import '../styles/kulthera-mint.css';
+import '../styles/onboarding.css';
+import '../styles/responsive.css';
 
 type AuthMode = 'login' | 'signup';
+type SignupStep = 'account' | 'styles' | 'creator-style';
 
 interface FormData {
   email: string;
@@ -24,268 +22,186 @@ interface FormData {
   name: string;
 }
 
-/**
- * Simple client-side validation
- * Returns errors object: { email: "error msg" } or empty {}
- * 
- * Why validate on client?
- * 1. Instant feedback (no API call needed)
- * 2. Better UX (user sees error immediately)
- * 3. Reduces server load (no invalid requests)
- * 4. Still validate on backend too (never trust client)
- */
-const validateForm = (data: FormData, mode: AuthMode): Record<string, string> => {
-  const errors: Record<string, string> = {};
-
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!data.email) {
-    errors.email = 'Email is required';
-  } else if (!emailRegex.test(data.email)) {
-    errors.email = 'Please enter a valid email';
-  }
-
-  // Password validation
-  if (!data.password) {
-    errors.password = 'Password is required';
-  } else if (data.password.length < 6) {
-    errors.password = 'Password must be at least 6 characters';
-  }
-
-  // Name validation (signup only)
-  if (mode === 'signup') {
-    if (!data.name) {
-      errors.name = 'Name is required';
-    } else if (data.name.length < 2) {
-      errors.name = 'Name must be at least 2 characters';
-    }
-  }
-
-  return errors;
-};
-
 export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
   const { login, signup, error: authError, isLoading, clearError } = useAuth();
   const [mode, setMode] = useState<AuthMode>('login');
+  const [signupStep, setSignupStep] = useState<SignupStep>('account');
+  const [isCreator, setIsCreator] = useState(false);
+  const [preferredStyles, setPreferredStyles] = useState<string[]>([]);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
     name: '',
   });
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
-  /**
-   * Handle input changes
-   * Update formData state as user types
-   * Clear validation errors when user corrects them
-   */
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear validation error for this field when user starts typing
-    if (validationErrors[name]) {
-      setValidationErrors(prev => {
-        const updated = { ...prev };
-        delete updated[name];
-        return updated;
-      });
-    }
+  const completeSignup = async (creatorStyle?: string) => {
+    await signup(formData.email, formData.password, formData.name, {
+      isCreator,
+      preferredStyles: isCreator ? undefined : preferredStyles,
+      creatorStyle,
+    });
+    if (isCreator) navigate('/dashboard');
+    else setShowWelcome(true);
   };
 
-  /**
-   * Handle form submission
-   * Validate → Call API → Navigate to home on success
-   */
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleEnter = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
 
-    // Client-side validation
-    const errors = validateForm(formData, mode);
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors);
+    if (mode === 'login') {
+      try {
+        await login(formData.email, formData.password);
+        const userJson = localStorage.getItem('authUser');
+        const parsed = userJson ? JSON.parse(userJson) : null;
+        navigate(parsed?.isCreator ? '/dashboard' : '/');
+      } catch {
+        /* handled */
+      }
       return;
     }
 
-    try {
-      if (mode === 'login') {
-        await login(formData.email, formData.password);
-      } else {
-        await signup(formData.email, formData.password, formData.name);
-      }
-
-      // Success! Navigate to home page
-      navigate('/');
-    } catch (err) {
-      // Error is handled by AuthContext and displayed below
-      // No need to do anything here
+    if (signupStep === 'account') {
+      if (!formData.name.trim()) return;
+      setSignupStep(isCreator ? 'creator-style' : 'styles');
+      return;
     }
   };
 
-  /**
-   * Toggle between login and signup modes
-   * Reset form when switching
-   */
-  const toggleMode = () => {
-    setMode(mode === 'login' ? 'signup' : 'login');
-    setFormData({ email: '', password: '', name: '' });
-    setValidationErrors({});
-    clearError();
-  };
+  const defaultEmail = isCreator ? 'creator@kulthera.africa' : 'visitor@kulthera.africa';
 
   return (
-    <div className="auth-container">
-      {/* Left side: Museum branding */}
-      <div className="auth-hero">
-        <div className="auth-hero-content">
-          <h1 className="auth-title">Kulthera</h1>
-          <p className="auth-subtitle">
-            African Digital Museum
-          </p>
-          <p className="auth-description">
-            Experience authentic African culture. Support creators in real-time through Web Monetization.
-          </p>
+    <div className="auth-gateway page-mint">
+      <WelcomeArtRoomModal
+        open={showWelcome}
+        onEnter={() => {
+          localStorage.setItem('kultr_welcome_seen', '1');
+          setShowWelcome(false);
+          navigate('/gallery');
+        }}
+      />
 
-          {/* Feature highlights */}
-          <div className="auth-features">
-            <div className="feature">
-              <span className="feature-icon">🎵</span>
-              <span>Discover Music</span>
-            </div>
-            <div className="feature">
-              <span className="feature-icon">🎨</span>
-              <span>Explore Art</span>
-            </div>
-            <div className="feature">
-              <span className="feature-icon">💰</span>
-              <span>Support Creators</span>
-            </div>
-          </div>
-        </div>
+      <div className="auth-gateway-brand">
+        <h1>Kulthera</h1>
+        <p className="auth-gateway-tagline">African culture, streamed alive.</p>
       </div>
 
-      {/* Right side: Auth form */}
-      <div className="auth-form-section">
-        <div className="auth-form-wrapper">
-          <h2 className="auth-form-title">
-            {mode === 'login' ? 'Welcome Back' : 'Join Kulthera'}
-          </h2>
+      {mode === 'signup' && signupStep === 'styles' && (
+        <div className="auth-gateway-card" style={{ maxWidth: 480 }}>
+          <ArtStylePicker selected={preferredStyles} onChange={setPreferredStyles} />
+          <button
+            type="button"
+            className="mint-btn-primary"
+            disabled={preferredStyles.length === 0 || isLoading}
+            onClick={() => completeSignup()}
+          >
+            {isLoading ? 'Creating account...' : 'Continue'}
+          </button>
+          <button type="button" className="mint-btn-outline" style={{ width: '100%', marginTop: 12 }} onClick={() => setSignupStep('account')}>
+            Back
+          </button>
+        </div>
+      )}
 
-          {/* API Error message */}
+      {mode === 'signup' && signupStep === 'creator-style' && (
+        <div className="auth-gateway-card" style={{ maxWidth: 480 }}>
+          <CreatorOnboardingPanel onComplete={({ style }) => completeSignup(style)} />
+        </div>
+      )}
+
+      {(mode === 'login' || signupStep === 'account') && (
+        <div className="auth-gateway-card">
+          <div className="role-toggle-mint">
+            <button
+              type="button"
+              className={!isCreator ? 'active' : ''}
+              onClick={() => setIsCreator(false)}
+            >
+              {mode === 'login' ? 'Sign in as Visitor' : 'Join as Visitor'}
+            </button>
+            <button
+              type="button"
+              className={isCreator ? 'active' : ''}
+              onClick={() => setIsCreator(true)}
+            >
+              {mode === 'login' ? 'Sign in as Creator' : 'Join as Creator'}
+            </button>
+          </div>
+
           {authError && (
-            <div className="error-banner">
-              <p>{authError}</p>
-              <button
-                className="error-dismiss"
-                onClick={clearError}
-                type="button"
-              >
-                ✕
-              </button>
-            </div>
+            <p style={{ color: '#f87171', fontSize: '0.85rem', marginBottom: 12 }}>{authError}</p>
           )}
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="auth-form">
-            {/* Name field (signup only) */}
+          <form onSubmit={handleEnter}>
             {mode === 'signup' && (
-              <div className="form-group">
-                <label htmlFor="name">Full Name</label>
-                <div className="input-wrapper">
-                  <User size={18} className="input-icon" />
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    disabled={isLoading}
-                  />
-                </div>
-                {validationErrors.name && (
-                  <span className="error-text">{validationErrors.name}</span>
-                )}
-              </div>
+              <>
+                <label className="field-label">Name</label>
+                <input
+                  className="mint-input"
+                  name="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
+                  placeholder="Your name"
+                />
+              </>
             )}
-
-            {/* Email field */}
-            <div className="form-group">
-              <label htmlFor="email">Email Address</label>
-              <div className="input-wrapper">
-                <Mail size={18} className="input-icon" />
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  disabled={isLoading}
-                />
-              </div>
-              {validationErrors.email && (
-                <span className="error-text">{validationErrors.email}</span>
-              )}
-            </div>
-
-            {/* Password field */}
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <div className="input-wrapper">
-                <Lock size={18} className="input-icon" />
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  disabled={isLoading}
-                />
-              </div>
-              {validationErrors.password && (
-                <span className="error-text">{validationErrors.password}</span>
-              )}
-            </div>
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              className="btn-primary"
-              disabled={isLoading}
-            >
+            <label className="field-label">Email</label>
+            <input
+              className="mint-input"
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
+              placeholder={defaultEmail}
+            />
+            <label className="field-label">Password</label>
+            <input
+              className="mint-input"
+              type="password"
+              value={formData.password}
+              onChange={(e) => setFormData((p) => ({ ...p, password: e.target.value }))}
+              placeholder="••••••••"
+            />
+            <button type="submit" className="mint-btn-primary" disabled={isLoading}>
               {isLoading ? (
-                <>
-                  <Loader size={18} className="spin" />
-                  <span>{mode === 'login' ? 'Signing in...' : 'Creating account...'}</span>
-                </>
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                  <Loader size={18} className="spin" /> Please wait
+                </span>
               ) : (
-                <span>{mode === 'login' ? 'Sign In' : 'Create Account'}</span>
+                'Enter Kulthera'
               )}
             </button>
           </form>
 
-          {/* Toggle mode */}
-          <div className="auth-toggle">
-            <p>
-              {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}
-            </p>
-            <button
-              type="button"
-              className="btn-link"
-              onClick={toggleMode}
-              disabled={isLoading}
-            >
-              {mode === 'login' ? 'Sign up' : 'Sign in'}
-            </button>
-          </div>
+          <p className="auth-gateway-footer">
+            Demo gateway: the same form splits visitors into the public museum and creators into
+            their workspace.
+          </p>
+
+          <p style={{ textAlign: 'center', marginTop: 16, fontSize: '0.85rem' }}>
+            {mode === 'login' ? (
+              <>
+                New here?{' '}
+                <button type="button" className="mint-btn-outline" style={{ border: 'none', padding: 0 }} onClick={() => setMode('signup')}>
+                  Sign up
+                </button>
+              </>
+            ) : (
+              <>
+                Have an account?{' '}
+                <button type="button" className="mint-btn-outline" style={{ border: 'none', padding: 0 }} onClick={() => { setMode('login'); setSignupStep('account'); }}>
+                  Sign in
+                </button>
+              </>
+            )}
+          </p>
+          <p style={{ textAlign: 'center', marginTop: 8 }}>
+            <Link to="/" style={{ color: '#64748b', fontSize: '0.8rem' }}>
+              ← Back to museum
+            </Link>
+          </p>
         </div>
-      </div>
+      )}
     </div>
   );
 };

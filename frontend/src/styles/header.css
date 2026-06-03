@@ -55,6 +55,27 @@
   background-clip: text;
 }
 
+.nav-auth-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  background: transparent;
+  color: #D4AF37;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-auth-label {
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+
 /* Desktop Navigation */
 .nav-desktop {
   display: flex;
