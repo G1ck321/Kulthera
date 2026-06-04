@@ -27,7 +27,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'w1',
         title: 'Sahel Ochres Color Study',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint.jpg',
         mediaType: 'painting',
         roomSlug: 'painted-memory',
         roomName: 'Painted Memory',
@@ -40,7 +40,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'w2',
         title: 'Market Day Intersections',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint1.jpg',
         mediaType: 'painting',
         roomSlug: 'painted-memory',
         roomName: 'Painted Memory',
@@ -71,7 +71,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'w3',
         title: 'Footsteps in the Dust',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint2.jpg',
         mediaType: 'audio',
         mediaUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
         roomSlug: 'sound-roots',

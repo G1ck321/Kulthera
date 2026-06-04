@@ -28,7 +28,7 @@ export function draftToWork(draft: CreatorUploadDraft): CreatorWork {
     id: draft.id,
     title: draft.title,
     thumbnailUrl: isAudio
-      ? 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=200'
+      ? 'assets/paint3.jpg'
       : draft.objectUrl,
     mediaType: isAudio ? 'audio' : 'painting',
     mediaUrl: isAudio ? draft.objectUrl : draft.objectUrl,

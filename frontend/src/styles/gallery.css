@@ -115,12 +115,12 @@
 }
 
 .filter-btn:hover {
-  background: var(--sand-deep);
+  background: var(--brand-black);
   border-color: var(--ochre);
 }
 
 .filter-btn.active {
-  background: var(--grad-warm);
+  background: #1A1614;
   border-color: var(--terracotta);
   color: var(--text-on-dark);
 }
