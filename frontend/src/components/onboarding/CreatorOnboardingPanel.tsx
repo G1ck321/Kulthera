@@ -40,6 +40,7 @@ export const CreatorOnboardingPanel: React.FC<CreatorOnboardingPanelProps> = ({ 
           <button
             key={s}
             type="button"
+            style={{ color:'#141210'}}
             className={`art-style-chip ${style === s ? 'selected' : ''}`}
             onClick={() => setStyle(s)}
           >

@@ -42,10 +42,10 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
       className="monetization-status-overlay" 
       style={{ 
         position: 'fixed',
-        bottom: '24px',
+        bottom: '89px',
         left: '24px',
         zIndex: 1000,
-        maxWidth: '380px',
+        maxWidth: '300px',
         color:'#ebe4d8',
         padding: '16px 20px',
         borderRadius: '16px',
