@@ -40,15 +40,16 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
   return (
     <div 
       className="monetization-status-overlay" 
-      style={{
+      style={{ 
         position: 'fixed',
         bottom: '24px',
         left: '24px',
         zIndex: 1000,
         maxWidth: '380px',
+        color:'#ebe4d8',
         padding: '16px 20px',
         borderRadius: '16px',
-        background: 'rgba(9, 9, 14, 0.85)',
+        background: '#141210',
         border: '1px solid rgba(16, 185, 129, 0.4)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
@@ -57,7 +58,8 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
         transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+      <div style={{ display: 'flex',
+        color:'#ebe4d8', alignItems: 'flex-start', gap: '12px' }}>
         {/* Status Indicator Badge */}
         <div style={{ position: 'relative', marginTop: '3px' }}>
           <span 
@@ -111,7 +113,8 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
                 padding: '2px 6px',
                 borderRadius: '4px',
                 background: 'rgba(99, 102, 241, 0.2)',
-                color: '#818cf8',
+                
+        color:'#ebe4d8',
                 border: '1px solid rgba(99, 102, 241, 0.3)'
               }}
             >
@@ -123,7 +126,7 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
             style={{ 
               margin: '4px 0 8px 0', 
               fontSize: '12px', 
-              color: '#94a3b8',
+        color:'#ebe4d8',
               lineHeight: '1.4'
             }}
           >
@@ -143,12 +146,12 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
             }}
           >
             <Sparkles size={14} style={{ color: '#b4532a', alignSelf: 'center' }} />
-            <span>${activeAmount.toFixed(5)}</span>
+            <span style={{color:'#ebe4d8', paddingInline:'16px 10px'}}>${activeAmount.toFixed(5)}</span>
             <span style={{ fontSize: '10px', color: '#64748b', fontWeight: 500 }}>USD</span>
           </div>
 
           {showTimer && (
-            <p className="monetization-elapsed" style={{ margin: '6px 0 0', fontSize: '11px', color: '#64748b' }}>
+            <p className="monetization-elapsed" style={{ margin: '6px 0 0', color:'#ebe4d8', fontSize: '11px'}}>
               Demo stream: {formatElapsed(elapsedSeconds)} elapsed
             </p>
           )}

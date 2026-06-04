@@ -85,7 +85,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'w4',
         title: 'Nightfall at the Oasis',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint3.jpg',
         mediaType: 'audio',
         mediaUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
         roomSlug: 'sound-roots',
@@ -117,7 +117,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'w5',
         title: 'Festival Season Memory',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint4.jpg',
         mediaType: 'story',
         roomSlug: 'living-stories',
         roomName: 'Living Stories',
@@ -153,7 +153,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'lim-1',
         title: 'One Button Orbit',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint5.jpg',
         mediaType: 'image',
         roomSlug: 'generative-dreams',
         roomName: 'Generative Dreams',
@@ -166,7 +166,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'lim-2',
         title: 'Garden Debugger',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint6.jpg',
         mediaType: 'image',
         roomSlug: 'generative-dreams',
         roomName: 'Generative Dreams',
@@ -197,7 +197,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'lim-3',
         title: 'Midnight Lagoon',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint7.jpg',
         mediaType: 'audio',
         mediaUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
         roomSlug: 'sound-roots',
@@ -211,7 +211,7 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
       work({
         id: 'lim-4',
         title: 'River of Packets',
-        thumbnailUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=200',
+        thumbnailUrl: '/assets/paint8.jpg',
         mediaType: 'audio',
         mediaUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
         roomSlug: 'sound-roots',
@@ -241,7 +241,8 @@ export const MUSEUM_ROOMS = [
     tagline: 'Contemporary canvases and Sahel-inspired colour studies',
     exhibits: 3,
     visitors: 31,
-    imageUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=900',
+    thumbnailUrl: '/assets/paint1.jpg',
+    imageUrl: '/assets/paint6.jpg',
   },
   {
     slug: 'artifact-house',
@@ -249,7 +250,7 @@ export const MUSEUM_ROOMS = [
     tagline: 'Bronze, textile, and ceremonial objects as living archives',
     exhibits: 2,
     visitors: 42,
-    imageUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=900',
+    imageUrl: '/assets/mum2.jpg',
   },
   {
     slug: 'living-stories',

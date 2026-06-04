@@ -7,7 +7,13 @@
   padding-bottom: 60px;
   background: var(--bg-page);
 }
-
+.p-3{
+  padding: 2px;
+}
+.mp-0{
+  margin: 0;
+  padding: 0;
+}
 .gallery-hero {
   padding: clamp(48px, 6vw, 72px) 20px;
   text-align: center;
@@ -304,7 +310,7 @@
   gap: 40px;
   max-width: 1200px;
   width: 100%;
-  background: var(--brand-white);
+  background: var(--brand-black);
   border: 2px solid var(--brand-black);
   border-radius: var(--radius-lg);
   overflow: hidden;

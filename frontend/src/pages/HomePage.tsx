@@ -59,7 +59,7 @@ export const HomePage: React.FC = () => {
               Creator Studio
             </Link>
           </div>
-          <p className="hero-powered">Powered by Interledger Protocol</p>
+          <p className="hero-powered">Powered by <em>Open Payments</em></p>
         </div>
       </section>
 

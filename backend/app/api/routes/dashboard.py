@@ -3,7 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 from uuid import UUID
 from typing import List, Dict, Any
-
+# In backend/app/api/routes/dashboard.py
+from app.core.security import get_current_user
 # Import database, models, and schemas
 from app.core.database import get_db
 from app.models import ExhibitViewSession, Exhibit, Creator
@@ -249,3 +250,13 @@ async def get_creator_earnings(
         "currency": "USD",
         "monetized_hours": monetized_hours
     }
+
+
+@router.get("/creators/me")
+async def get_current_creator_dashboard(
+    db: AsyncSession = Depends(get_db),
+    token_data: dict = Depends(get_current_user)   # <-- new
+) -> Dict[str, Any]:
+    # token_data["user_id"] is the creator’s id
+    creator_res = await db.execute(select(Creator).where(Creator.id == token_data["user_id"]))
+    ...

@@ -9,6 +9,9 @@
   padding: 24px;
   backdrop-filter: blur(8px);
 }
+.light{
+  color: #faf8f4;
+}
 
 .onboarding-modal {
   max-width: 520px;

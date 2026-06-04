@@ -16,8 +16,8 @@ export const ExhibitEntryModal: React.FC<ExhibitEntryModalProps> = ({
   return (
     <div className="onboarding-overlay exhibit-entry-overlay" role="dialog" aria-modal="true">
       <div className="onboarding-modal exhibit-entry-modal" onClick={(e) => e.stopPropagation()}>
-        <span className="exhibit-entry-badge">Cultural Exhibit</span>
-        <h2>{exhibit.title}</h2>
+        <span className=" light exhibit-entry-badge">Cultural Exhibit</span>
+        <h2 className='light'>{exhibit.title}</h2>
         <p className="exhibit-entry-artist">by {exhibit.creator.name}</p>
 
         {exhibit.culturalContext && (

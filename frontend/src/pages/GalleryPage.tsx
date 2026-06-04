@@ -239,7 +239,7 @@ export const GalleryPage: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Image */}
-            <div className="lightbox-image-wrapper">
+            <div className="lightbox-image-wrapper p-3">
               <img
                 src={selectedExhibit.mediaUrl}
                 alt={selectedExhibit.title}
@@ -248,10 +248,10 @@ export const GalleryPage: React.FC = () => {
             </div>
 
             {/* Info panel */}
-            <div className="lightbox-info">
+            <div className="lightbox-info mp-0">
               {/* Title & Type */}
               <div>
-                <h2 className="lightbox-title">{selectedExhibit.title}</h2>
+                <h2 className="light lightbox-title">{selectedExhibit.title}</h2>
                 <div className="info-meta">
                   <span className="badge-type">{selectedExhibit.mediaType}</span>
                   {selectedExhibit.creator.country && (
@@ -264,7 +264,7 @@ export const GalleryPage: React.FC = () => {
               </div>
 
               {/* Description */}
-              <p className="lightbox-description">
+              <p className="light lightbox-description">
                 {selectedExhibit.description}
               </p>
 

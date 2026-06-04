@@ -15,7 +15,7 @@ export const WelcomeArtRoomModal: React.FC<WelcomeArtRoomModalProps> = ({ open, 
         <div className="welcome-icon">
           <Sparkles size={32} />
         </div>
-        <h2>Welcome to the Art Room</h2>
+        <h2 className='light'>Welcome to the Art Room</h2>
         <p className="welcome-lead">
           You&apos;re not limited by recommendations here. Beauty is in the eye of the beholder —
           wander as far as you want.
