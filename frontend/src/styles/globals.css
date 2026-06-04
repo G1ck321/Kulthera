@@ -6,7 +6,15 @@
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
-
+.pl-2{
+margin-left: 4px;
+}
+.pt-2{
+ padding-top: 2px;
+}
+.black{
+  color: var(--ink);
+}
 body {
   background: var(--canvas);
   color: var(--ink);

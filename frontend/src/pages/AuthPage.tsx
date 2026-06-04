@@ -87,6 +87,7 @@ export const AuthPage: React.FC = () => {
         <p className="auth-gateway-tagline">African culture, streamed alive.</p>
       </div>
 
+      {!showWelcome && (<>
       {mode === 'signup' && signupStep === 'styles' && (
         <div className="auth-gateway-card" style={{ maxWidth: 480 }}>
           <ArtStylePicker selected={preferredStyles} onChange={setPreferredStyles} />
@@ -202,6 +203,7 @@ export const AuthPage: React.FC = () => {
           </p>
         </div>
       )}
+      </>)}
     </div>
   );
 };

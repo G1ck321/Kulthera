@@ -175,8 +175,8 @@ const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
     description: 'Contemporary Sahel migration narrative in ochre and clay.',
     culturalContext: 'Mineral pigments from Niger clay cliffs.',
     mediaType: 'painting',
-    mediaUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800',
-    previewUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=400',
+    mediaUrl: '/assets/paint.jpg',
+    previewUrl: '/assets/paint.jpg',
     walletAddress: '$ilp.interledger-test.dev/amina',
     createdAt: '',
     creator: {
@@ -186,7 +186,7 @@ const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
       country: 'Niger',
       walletAddress: '$ilp.interledger-test.dev/amina',
       paymentPointer: '$ilp.interledger-test.dev/amina',
-      avatarUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=150',
+      avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=AminaBello',
     },
   },
   {
@@ -196,8 +196,8 @@ const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
     description: 'Layered digital illustration of market motion.',
     culturalContext: 'West African market day traditions.',
     mediaType: 'painting',
-    mediaUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=800',
-    previewUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=400',
+    mediaUrl: '/assets/paint1.jpg',
+    previewUrl: '/assets/paint1.jpg',
     walletAddress: '$ilp.interledger-test.dev/amina',
     createdAt: '',
     creator: {
@@ -207,7 +207,7 @@ const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
       country: 'Niger',
       walletAddress: '$ilp.interledger-test.dev/amina',
       paymentPointer: '$ilp.interledger-test.dev/amina',
-      avatarUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=150',
+      avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=AminaBello',
     },
   },
   {
@@ -217,8 +217,8 @@ const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
     description: 'Hand-woven geometric royal patterns.',
     culturalContext: 'Bonwire weaving tradition, Ghana.',
     mediaType: 'artifact',
-    mediaUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=800',
-    previewUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=400',
+    mediaUrl: '/assets/paint2.jpg',
+    previewUrl: '/assets/paint2.jpg',
     walletAddress: '$ilp.interledger-test.dev/nana',
     createdAt: '',
     creator: {
@@ -228,7 +228,7 @@ const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
       country: 'Ghana',
       walletAddress: '$ilp.interledger-test.dev/nana',
       paymentPointer: '$ilp.interledger-test.dev/nana',
-      avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&q=80&w=150',
+      avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=NanaKwame',
     },
   },
   {
@@ -238,8 +238,8 @@ const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
     description: 'Lost-wax brass casting documentation.',
     culturalContext: 'Kingdom of Benin royal guild tradition.',
     mediaType: 'artifact',
-    mediaUrl: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&q=80&w=800',
-    previewUrl: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&q=80&w=400',
+    mediaUrl: '/assets/paint3.jpg',
+    previewUrl: '/assets/paint3.jpg',
     walletAddress: '$ilp.interledger-test.dev/kunle',
     createdAt: '',
     creator: {
@@ -249,7 +249,7 @@ const GALLERY_MOCK_EXHIBITS: Exhibit[] = [
       country: 'Nigeria',
       walletAddress: '$ilp.interledger-test.dev/kunle',
       paymentPointer: '$ilp.interledger-test.dev/kunle',
-      avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
+      avatarUrl: 'https://api.dicebear.com/7.x/personas/svg?seed=MasterKunle',
     },
   },
 ];

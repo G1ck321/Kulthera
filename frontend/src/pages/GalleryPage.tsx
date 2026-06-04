@@ -206,7 +206,7 @@ export const GalleryPage: React.FC = () => {
                 className="card-image"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src =
-                    'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=400';
+                    '/assets/paint2.jpg';
                 }}
               />
               <div className="card-overlay">
@@ -239,9 +239,9 @@ export const GalleryPage: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Image */}
-            <div className="lightbox-image-wrapper p-3">
+            <div className="lightbox-image-wrapper pl-2 pt-2 p-3">
               <img
-                src={selectedExhibit.mediaUrl}
+                src={selectedExhibit.mediaUrl ||"assets/paint.jpg"}
                 alt={selectedExhibit.title}
                 className="lightbox-image"
               />

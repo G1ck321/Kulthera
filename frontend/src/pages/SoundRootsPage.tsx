@@ -239,7 +239,7 @@ export const SoundRootsPage: React.FC = () => {
       <div className="soundroots-info">
         <div className="info-card">
           <h3>🌍 African Musical Traditions</h3>
-          <p>
+          <p style={{ color:'#141210'}}>
             Sound Roots celebrates diverse African musical heritage—from griot storytelling
             traditions to contemporary innovations. Each performance represents generations
             of cultural knowledge.
@@ -248,7 +248,7 @@ export const SoundRootsPage: React.FC = () => {
 
         <div className="info-card">
           <h3>💰 How Monetization Works</h3>
-          <p>
+          <p style={{ color:'#141210'}}>
             When you listen to music on Kulthera, Web Monetization technology streams micropayments
             directly to the artist's wallet. No intermediaries. Pure support.
           </p>
@@ -256,7 +256,7 @@ export const SoundRootsPage: React.FC = () => {
 
         <div className="info-card">
           <h3>🎤 Featured: Kokari Walker</h3>
-          <p>
+          <p style={{ color:'#141210'}}>
             Kokari Walker's kora mastery carries Mandinka tradition forward. Through Kulthera,
             his artistry reaches global audiences while he earns sustainable income from
             his cultural work.

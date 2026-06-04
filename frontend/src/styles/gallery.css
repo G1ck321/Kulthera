@@ -5,7 +5,8 @@
 .gallery-container {
   min-height: 100vh;
   padding-bottom: 60px;
-  background: var(--bg-page);
+  background: linear-gradient(180deg, #0f0f14 0%, #1a1528 40%, #12121a 100%);
+  color: #faf8f4;
 }
 .p-3{
   padding: 2px;
@@ -18,14 +19,14 @@
   padding: clamp(48px, 6vw, 72px) 20px;
   text-align: center;
   margin-bottom: 32px;
-  background: var(--onyx);
+  background: linear-gradient(135deg, rgba(180,83,42,0.15) 0%, rgba(15,15,20,0.95) 100%);
 }
 
 .gallery-hero h1 {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 5vw, 2.35rem);
   margin-bottom: 10px;
-  color: var(--plaster);
+  color: #faf8f4;
 }
 
 .gallery-hero p {
@@ -40,7 +41,7 @@
   grid-column: 1 / -1;
   text-align: center;
   padding: 40px;
-  color: var(--text-muted);
+  color: rgba(250,248,244,0.6);
 }
 
 .artist-rooms-strip {
@@ -51,7 +52,7 @@
 
 .artist-rooms-strip h2 {
   font-size: 1.5rem;
-  color: var(--text-dark);
+  color: #faf8f4;
   margin-bottom: 8px;
 }
 
@@ -74,16 +75,17 @@
   width: 200px;
   padding: 12px;
   border-radius: var(--radius-md);
-  background: var(--brand-white);
-  border: 2px solid var(--brand-black);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
   text-decoration: none;
-  color: var(--brand-black);
+  color: #faf8f4;
   transition: all var(--transition-normal);
 }
 
 .artist-room-card:hover {
-  border-color: var(--brand-green);
-  box-shadow: 4px 4px 0 var(--brand-black);
+  border-color: var(--terracotta, #b4532a);
+  box-shadow: 0 4px 20px rgba(180,83,42,0.2);
+  transform: translateY(-2px);
 }
 
 .artist-room-card img {
@@ -110,10 +112,10 @@
 
 .filter-btn {
   padding: 10px 20px;
-  background: var(--cream);
-  border: var(--border-warm);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: var(--radius-md);
-  color: var(--text-muted);
+  color: rgba(250,248,244,0.7);
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
@@ -121,8 +123,9 @@
 }
 
 .filter-btn:hover {
-  background: var(--brand-black);
-  border-color: var(--ochre);
+  background: rgba(180,83,42,0.15);
+  border-color: rgba(180,83,42,0.4);
+  color: #faf8f4;
 }
 
 .filter-btn.active {
@@ -192,8 +195,8 @@
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
-  background: var(--sand-deep);
-  border: var(--border-warm);
+  background: #1a1528;
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   box-shadow: var(--shadow-sm);
 }
@@ -242,8 +245,8 @@
 /* Card info */
 .card-info {
   padding: 12px;
-  background: var(--brand-white);
-  border: 2px solid var(--brand-black);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   border-top: none;
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
 }
@@ -251,7 +254,7 @@
 .card-title {
   font-size: 14px;
   font-weight: 700;
-  color: var(--brand-black);
+  color: #faf8f4;
   margin: 0 0 4px 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -260,14 +263,14 @@
 
 .card-artist {
   font-size: 12px;
-  color: var(--brand-green-dark);
+  color: var(--terracotta, #b4532a);
   font-weight: 600;
   margin: 0 0 4px 0;
 }
 
 .card-type {
   font-size: 11px;
-  color: var(--text-muted);
+  color: rgba(250,248,244,0.5);
   margin: 0;
   text-transform: capitalize;
 }
@@ -310,8 +313,8 @@
   gap: 40px;
   max-width: 1200px;
   width: 100%;
-  background: var(--brand-black);
-  border: 2px solid var(--brand-black);
+  background: #12121a;
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: var(--radius-lg);
   overflow: hidden;
   max-height: 90vh;

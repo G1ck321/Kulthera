@@ -124,19 +124,24 @@ export const HomePage: React.FC = () => {
       </section>
 
       <section className="featured-creator">
-        <h2>Featured: Sani &ldquo;The Kokari Walker&rdquo;</h2>
+        <h2>Inspired By:  &ldquo; Kokayi Walker&rdquo;</h2>
         <div className="featured-card">
           <div className="featured-content">
             <img
-              src="https://images.unsplash.com/photo-1531384370597-859faa8ce332?auto=format&fit=crop&q=80&w=200"
+              src="https://api.dicebear.com/7.x/personas/svg?seed=KokariWalker"
               alt="The Kokari Walker"
               className="featured-image"
             />
             <div className="featured-text">
-              <h3>Sani Kokari — Wandering Minstrel</h3>
-              <p className="featured-origin">Mali · Kora tradition</p>
-              <p>Your listening time streams support directly to his wallet.</p>
-              <Link to="/music" className="btn-listen">Listen in Sound Roots</Link>
+              <h3>Kokayi Walker — Interdisciplinary Creative & Grammy-nominated Musician</h3>
+              <p className="featured-origin">Strategic Advisor · Interledger Foundation</p>
+              <p>Kokayi Played a pivotal role in designing Interledger's first arts-centered grants.
+                FUTURE | MONEY.<br></br>
+                He pushes for tech architectures where creators of content can seamlessly receive micro monetization
+                directly from audiences, without reliance on a middle man.<br></br>
+
+              </p>
+              <Link target='_blank' to="https://www.linkedin.com/in/kokayi" className="btn-listen">More on him</Link>
             </div>
           </div>
         </div>
