@@ -19,7 +19,7 @@ app = FastAPI(
 # Enforce strict CORS policies to block script injections from unauthorized domains
 origins = [
     settings.FRONTEND_ORIGIN,
-    "http://localhost:5173", # Always permit local Vite SPA during dev
+    "https://kulthera.vercel.app/", # Always permit local Vite SPA during dev
 ]
 
 app.add_middleware(
