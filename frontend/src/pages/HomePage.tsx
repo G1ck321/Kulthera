@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Music, Palette, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { HeroCarousel } from '../components/HeroCarousel';
+import { DemoStatusBadge } from '../components/DemoStatusBadge';
+import { MuseumWingCard } from '../components/MuseumWingCard';
 import { HERO_SLIDES } from '../data/heroSlides';
 import { MUSEUM_ROOMS } from '../data/mockCreators';
 import '../styles/home.css';
@@ -13,10 +15,22 @@ const LOGO_SRC = '/assets/kulthera-logo.png';
 export const HomePage: React.FC = () => {
   const totalExhibits = MUSEUM_ROOMS.reduce((n, r) => n + r.exhibits, 0);
 
+  const wings = MUSEUM_ROOMS.map((room) => ({
+    slug: room.slug,
+    name: room.name,
+    tagline: room.tagline,
+    exhibits: room.exhibits,
+    visitors: room.visitors,
+    imageUrl: room.imageUrl,
+    href: room.slug === 'sound-roots' ? '/music' : '/gallery',
+  }));
+
   return (
     <div className="home-container">
+      <DemoStatusBadge exhibitCount={totalExhibits} />
+
       <section className="hero" aria-label="Welcome">
-        <HeroCarousel slides={HERO_SLIDES} intervalMs={4500} />
+        <HeroCarousel slides={HERO_SLIDES} intervalMs={5000} />
 
         <div className="hero-content">
           <img
@@ -38,57 +52,26 @@ export const HomePage: React.FC = () => {
             attention into creator support.
           </p>
           <div className="hero-cta">
-            <Link to="/gallery" className="btn-primary-large">
+            <Link to="/gallery" className="btn-glass">
               Enter Museum <ArrowRight size={20} />
             </Link>
-            <Link to="/auth" className="btn-secondary-large">
+            <Link to="/auth" className="btn-outline-light">
               Creator Studio
             </Link>
           </div>
           <p className="hero-powered">Powered by Interledger Protocol</p>
         </div>
-
-        <aside className="hero-stat-card" aria-label="Museum stats">
-          <p className="hero-stat-label">Live demo loop</p>
-          <p className="hero-stat-value">{totalExhibits}</p>
-          <p className="hero-stat-sub">curated exhibits across four rooms</p>
-          <div className="hero-stat-dots">
-            <span className="dot-green" />
-            <span className="dot-white" />
-            <span className="dot-black" />
-          </div>
-        </aside>
       </section>
 
-      <section className="rooms-section container-page">
+      <section className="rooms-section">
         <div className="rooms-section-header">
-          <h2>Museum Rooms</h2>
+          <h2>Museum Wings</h2>
           <p className="rooms-section-hint">Choose a room to begin the stream.</p>
         </div>
-        <div className="rooms-grid rooms-grid-responsive">
-          {MUSEUM_ROOMS.map((room) => {
-            const href = room.slug === 'sound-roots' ? '/music' : '/gallery';
-            const icon =
-              room.slug === 'sound-roots'
-                ? '🎵'
-                : room.slug === 'painted-memory'
-                  ? '🎨'
-                  : room.slug === 'artifact-house'
-                    ? '🏛️'
-                    : '📖';
-            return (
-              <Link key={room.slug} to={href} className="room-card">
-                <div className="room-icon">{icon}</div>
-                <h3>{room.name}</h3>
-                <p>{room.exhibits} exhibits in this wing</p>
-                <span className="room-visitors">{room.visitors} visitors now</span>
-                <div className="room-footer">
-                  {room.slug === 'sound-roots' ? <Music size={16} /> : <Palette size={16} />}
-                  <span>Enter room</span>
-                </div>
-              </Link>
-            );
-          })}
+        <div className="wings-grid">
+          {wings.map((wing) => (
+            <MuseumWingCard key={wing.slug} wing={wing} />
+          ))}
         </div>
       </section>
 
@@ -98,22 +81,22 @@ export const HomePage: React.FC = () => {
           <div className="step-card">
             <div className="step-number">1</div>
             <h3>Discover</h3>
-            <p>Browse music, paintings, artifacts, and stories across four rooms.</p>
+            <p>Browse music, paintings, artifacts, and stories across four curated wings.</p>
           </div>
           <div className="step-card">
             <div className="step-number">2</div>
             <h3>Engage</h3>
-            <p>Your presence funds the creator in real time.</p>
+            <p>Your presence funds the creator in real time—attention becomes visible.</p>
           </div>
           <div className="step-card">
             <div className="step-number">3</div>
             <h3>Support</h3>
-            <p>Web Monetization streams to the active exhibit wallet.</p>
+            <p>Web Monetization streams to whoever&apos;s exhibit you are experiencing.</p>
           </div>
           <div className="step-card">
             <div className="step-number">4</div>
             <h3>Track</h3>
-            <p>Creators upload and manage work from their studio.</p>
+            <p>Creators steward their rooms from a professional workspace.</p>
           </div>
         </div>
       </section>
@@ -122,8 +105,11 @@ export const HomePage: React.FC = () => {
         <div className="explainer-content">
           <div className="explainer-text">
             <h2>Attention becomes visible support</h2>
-            <p>Value routes directly to custodians and artists through open web standards.</p>
-            <Link to="/auth" className="btn-get-started">Get started</Link>
+            <p>
+              Traditional platforms take a large cut. Kulthera routes value directly to
+              custodians and artists through open web standards.
+            </p>
+            <Link to="/auth" className="btn-get-started">Begin as patron or creator</Link>
           </div>
           <div className="explainer-visual">
             <div className="visual-flow">
@@ -158,8 +144,8 @@ export const HomePage: React.FC = () => {
 
       <section className="final-cta">
         <h2>Ready to explore?</h2>
-        <p>Step into the museum.</p>
-        <Link to="/gallery" className="btn-primary-large">
+        <p>Beauty is in the eye of the beholder—wander as far as you wish.</p>
+        <Link to="/gallery" className="btn-glass">
           Enter Museum <ArrowRight size={20} />
         </Link>
       </section>

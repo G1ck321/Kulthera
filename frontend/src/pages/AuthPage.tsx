@@ -9,7 +9,7 @@ import { Loader } from 'lucide-react';
 import { ArtStylePicker } from '../components/onboarding/ArtStylePicker';
 import { WelcomeArtRoomModal } from '../components/onboarding/WelcomeArtRoomModal';
 import { CreatorOnboardingPanel } from '../components/onboarding/CreatorOnboardingPanel';
-import '../styles/kulthera-mint.css';
+import '../styles/auth-gateway.css';
 import '../styles/onboarding.css';
 import '../styles/responsive.css';
 
@@ -72,7 +72,7 @@ export const AuthPage: React.FC = () => {
   const defaultEmail = isCreator ? 'creator@kulthera.africa' : 'visitor@kulthera.africa';
 
   return (
-    <div className="auth-gateway page-mint">
+    <div className="auth-gateway">
       <WelcomeArtRoomModal
         open={showWelcome}
         onEnter={() => {
@@ -92,13 +92,13 @@ export const AuthPage: React.FC = () => {
           <ArtStylePicker selected={preferredStyles} onChange={setPreferredStyles} />
           <button
             type="button"
-            className="mint-btn-primary"
+            className="heritage-btn-primary"
             disabled={preferredStyles.length === 0 || isLoading}
             onClick={() => completeSignup()}
           >
             {isLoading ? 'Creating account...' : 'Continue'}
           </button>
-          <button type="button" className="mint-btn-outline" style={{ width: '100%', marginTop: 12 }} onClick={() => setSignupStep('account')}>
+          <button type="button" className="heritage-btn-secondary" style={{ width: '100%', marginTop: 12 }} onClick={() => setSignupStep('account')}>
             Back
           </button>
         </div>
@@ -112,7 +112,7 @@ export const AuthPage: React.FC = () => {
 
       {(mode === 'login' || signupStep === 'account') && (
         <div className="auth-gateway-card">
-          <div className="role-toggle-mint">
+          <div className="role-toggle-heritage">
             <button
               type="button"
               className={!isCreator ? 'active' : ''}
@@ -136,9 +136,9 @@ export const AuthPage: React.FC = () => {
           <form onSubmit={handleEnter}>
             {mode === 'signup' && (
               <>
-                <label className="field-label">Name</label>
+                <label className="heritage-label">Name</label>
                 <input
-                  className="mint-input"
+                  className="heritage-input"
                   name="name"
                   value={formData.name}
                   onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
@@ -146,23 +146,23 @@ export const AuthPage: React.FC = () => {
                 />
               </>
             )}
-            <label className="field-label">Email</label>
+            <label className="heritage-label">Email</label>
             <input
-              className="mint-input"
+              className="heritage-input"
               type="email"
               value={formData.email}
               onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
               placeholder={defaultEmail}
             />
-            <label className="field-label">Password</label>
+            <label className="heritage-label">Password</label>
             <input
-              className="mint-input"
+              className="heritage-input"
               type="password"
               value={formData.password}
               onChange={(e) => setFormData((p) => ({ ...p, password: e.target.value }))}
               placeholder="••••••••"
             />
-            <button type="submit" className="mint-btn-primary" disabled={isLoading}>
+            <button type="submit" className="heritage-btn-primary" disabled={isLoading}>
               {isLoading ? (
                 <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                   <Loader size={18} className="spin" /> Please wait
@@ -182,14 +182,14 @@ export const AuthPage: React.FC = () => {
             {mode === 'login' ? (
               <>
                 New here?{' '}
-                <button type="button" className="mint-btn-outline" style={{ border: 'none', padding: 0 }} onClick={() => setMode('signup')}>
+                <button type="button" className="heritage-btn-secondary" style={{ border: 'none', padding: 0, background: 'transparent' }} onClick={() => setMode('signup')}>
                   Sign up
                 </button>
               </>
             ) : (
               <>
                 Have an account?{' '}
-                <button type="button" className="mint-btn-outline" style={{ border: 'none', padding: 0 }} onClick={() => { setMode('login'); setSignupStep('account'); }}>
+                <button type="button" className="heritage-btn-secondary" style={{ border: 'none', padding: 0, background: 'transparent' }} onClick={() => { setMode('login'); setSignupStep('account'); }}>
                   Sign in
                 </button>
               </>

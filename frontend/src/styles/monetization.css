@@ -28,8 +28,8 @@
 }
 
 .monetization-status-overlay.streaming {
-  border: 1px solid rgba(16, 185, 129, 0.4);
-  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(180, 83, 42, 0.4);
+  box-shadow: 0 12px 40px rgba(180, 83, 42, 0.15);
   animation: pulseGlow 3s infinite;
 }
 
@@ -46,8 +46,8 @@
 }
 
 .monetization-status-badge.active {
-  background-color: #10b981;
-  box-shadow: 0 0 10px #10b981;
+  background-color: var(--terracotta);
+  box-shadow: 0 0 10px var(--terracotta);
 }
 
 .monetization-status-badge-ping {
@@ -57,7 +57,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: var(--terracotta);
   animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
   opacity: 0.75;
 }
@@ -107,7 +107,7 @@
 }
 
 .monetization-status-creator {
-  color: #10b981;
+  color: var(--terracotta);
   font-weight: 700;
 }
 
@@ -119,7 +119,7 @@
   font-family: 'Courier New', monospace;
   font-size: 18px;
   font-weight: 700;
-  color: #10b981;
+  color: var(--terracotta);
   margin: 0;
 }
 
@@ -142,7 +142,7 @@
 }
 
 .monetization-status-footer-icon {
-  color: #10b981;
+  color: var(--terracotta);
   flex-shrink: 0;
 }
 
@@ -188,10 +188,10 @@
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
+    box-shadow: 0 12px 40px rgba(180, 83, 42, 0.15);
   }
   50% {
-    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35);
+    box-shadow: 0 12px 40px rgba(180, 83, 42, 0.35);
   }
 }
 

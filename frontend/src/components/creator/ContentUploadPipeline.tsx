@@ -21,8 +21,6 @@ export const ContentUploadPipeline: React.FC<ContentUploadPipelineProps> = ({ on
   const [roomName, setRoomName] = useState('Painted Memory');
   const [submitted, setSubmitted] = useState(false);
 
-  const accept = 'image/*,audio/mpeg,audio/wav,audio/mp3,audio/ogg';
-
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (f) setFile(f);
@@ -34,12 +32,10 @@ export const ContentUploadPipeline: React.FC<ContentUploadPipelineProps> = ({ on
     if (!file || !title.trim()) return;
 
     const isAudio = file.type.startsWith('audio/');
-    const objectUrl = URL.createObjectURL(file);
-
     onSubmit({
       fileName: file.name,
       fileType: isAudio ? 'audio' : 'image',
-      objectUrl,
+      objectUrl: URL.createObjectURL(file),
       title: title.trim(),
       narrative: narrative.trim(),
       roomName,
@@ -53,54 +49,47 @@ export const ContentUploadPipeline: React.FC<ContentUploadPipelineProps> = ({ on
   };
 
   return (
-    <section className="upload-pipeline">
-      <h2>Content Upload Pipeline</h2>
-      <p className="upload-pipeline-sub">
-        Demo CMS form for protected uploads and authentic metadata.
+    <section className="workspace-upload-panel">
+      <h2>Content upload pipeline</h2>
+      <p className="workspace-upload-sub">
+        Demo CMS for protected uploads and authentic metadata. Submissions enter admin review.
       </p>
 
-      <form onSubmit={handleSubmit} className="upload-form">
-        <label className="field-label">Asset file selector</label>
+      <form onSubmit={handleSubmit}>
+        <label className="heritage-label">Asset file</label>
         <div
-          className="upload-dropzone"
+          className="workspace-dropzone"
           onClick={() => fileRef.current?.click()}
           onKeyDown={(e) => e.key === 'Enter' && fileRef.current?.click()}
           role="button"
           tabIndex={0}
         >
-          <input
-            ref={fileRef}
-            type="file"
-            accept={accept}
-            hidden
-            onChange={handleFile}
-          />
+          <input ref={fileRef} type="file" accept="image/*,audio/*" hidden onChange={handleFile} />
           <Upload size={24} />
-          <span>{file ? file.name : 'Choose image / audio file'}</span>
-          <span className="upload-hint">MP3, WAV, PNG, JPG — max one file per submit</span>
+          <span>{file ? file.name : 'Choose image or audio file'}</span>
         </div>
 
-        <label className="field-label">Title & historical timeline tag</label>
+        <label className="heritage-label">Title & timeline tag</label>
         <input
           type="text"
-          className="mint-input"
+          className="heritage-input"
           placeholder="Market Memory / Contemporary painting"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
 
-        <label className="field-label">Lineage & cultural lore narrative</label>
+        <label className="heritage-label">Cultural lore narrative</label>
         <textarea
-          className="mint-input mint-textarea"
-          placeholder="A cultural story describing origin, lineage, ownership, and context."
+          className="heritage-textarea"
+          placeholder="Origin, lineage, ownership, and context for custodians and visitors."
           rows={4}
           value={narrative}
           onChange={(e) => setNarrative(e.target.value)}
         />
 
-        <label className="field-label">Target room assignment</label>
+        <label className="heritage-label">Target room</label>
         <select
-          className="mint-input"
+          className="heritage-select"
           value={roomName}
           onChange={(e) => setRoomName(e.target.value)}
         >
@@ -111,13 +100,13 @@ export const ContentUploadPipeline: React.FC<ContentUploadPipelineProps> = ({ on
           ))}
         </select>
 
-        <button type="submit" className="mint-btn-primary" disabled={!file || !title.trim()}>
+        <button type="submit" className="heritage-btn-primary" disabled={!file || !title.trim()}>
           Submit to admin review
         </button>
 
         {submitted && (
-          <p className="upload-success">
-            <CheckCircle size={16} /> Queued for review — visible in your works list below.
+          <p className="workspace-upload-success">
+            <CheckCircle size={16} /> Queued for review — see your exhibits list below.
           </p>
         )}
       </form>

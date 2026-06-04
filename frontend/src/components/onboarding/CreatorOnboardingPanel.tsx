@@ -84,7 +84,7 @@ export const CreatorOnboardingPanel: React.FC<CreatorOnboardingPanelProps> = ({ 
 
       <button
         type="button"
-        className="btn-primary btn-wide"
+        className="heritage-btn-primary btn-wide"
         disabled={!resolvedStyle}
         onClick={() => onComplete({ style: resolvedStyle, uploads })}
       >

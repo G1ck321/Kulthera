@@ -66,8 +66,8 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
               width: '10px',
               height: '10px',
               borderRadius: '50%',
-              backgroundColor: '#10b981',
-              boxShadow: '0 0 10px #10b981',
+              backgroundColor: '#b4532a',
+              boxShadow: '0 0 10px #b4532a',
               transition: 'all 0.3s ease'
             }} 
           />
@@ -80,7 +80,7 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
               width: '10px',
               height: '10px',
               borderRadius: '50%',
-              backgroundColor: '#10b981',
+              backgroundColor: '#b4532a',
               animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
               opacity: 0.75
             }}
@@ -127,7 +127,7 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
               lineHeight: '1.4'
             }}
           >
-            Generating support dynamically for <span style={{ color: '#10b981', fontWeight: 700 }}>{creatorName}</span>.
+            Generating support dynamically for <span style={{ color: '#b4532a', fontWeight: 700 }}>{creatorName}</span>.
           </p>
 
           {/* Amount Stats */}
@@ -139,10 +139,10 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
               fontFamily: 'monospace',
               fontSize: '18px',
               fontWeight: 700,
-              color: '#10b981'
+              color: '#b4532a'
             }}
           >
-            <Sparkles size={14} style={{ color: '#10b981', alignSelf: 'center' }} />
+            <Sparkles size={14} style={{ color: '#b4532a', alignSelf: 'center' }} />
             <span>${activeAmount.toFixed(5)}</span>
             <span style={{ fontSize: '10px', color: '#64748b', fontWeight: 500 }}>USD</span>
           </div>
@@ -166,7 +166,7 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
               color: '#64748b' 
             }}
           >
-            <ShieldCheck size={12} style={{ color: '#10b981' }} />
+            <ShieldCheck size={12} style={{ color: '#b4532a' }} />
             <span>Tracking attention value • Simulated Support</span>
           </div>
         </div>

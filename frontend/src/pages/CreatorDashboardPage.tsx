@@ -2,10 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { ContentUploadPipeline } from '../components/creator/ContentUploadPipeline';
-import {
-  getMockCreatorForUser,
-  formatDuration,
-} from '../data/mockCreators';
+import { getMockCreatorForUser, formatDuration } from '../data/mockCreators';
 import type { CreatorProfile, CreatorWork, CreatorUploadDraft } from '../types/creator';
 import {
   loadPendingUploads,
@@ -15,7 +12,7 @@ import {
   savePaymentPointer,
 } from '../services/creatorStorage';
 import { fetchCreatorAnalytics, fetchCreatorProfile } from '../utils/apiService';
-import '../styles/kulthera-mint.css';
+import '../styles/creator-workspace.css';
 import '../styles/responsive.css';
 
 export const CreatorDashboardPage: React.FC = () => {
@@ -39,22 +36,20 @@ export const CreatorDashboardPage: React.FC = () => {
           ...base,
           name: apiProfile.name || base.name,
           avatarUrl: apiProfile.avatarUrl || base.avatarUrl,
-          paymentPointer: apiProfile.paymentPointer || apiProfile.walletAddress || base.paymentPointer,
+          paymentPointer:
+            apiProfile.paymentPointer || apiProfile.walletAddress || base.paymentPointer,
         };
         const analytics = await fetchCreatorAnalytics();
         if (analytics.totalEarnings) {
           base.webMonetizationUsd = analytics.totalEarnings;
         }
       } catch {
-        /* use mock */
+        /* mock */
       }
 
-      const pointer = loadPaymentPointer(userId, base.paymentPointer);
-      setPaymentPointer(pointer);
+      setPaymentPointer(loadPaymentPointer(userId, base.paymentPointer));
       setProfile(base);
-
-      const uploads = loadPendingUploads(userId).map(draftToWork);
-      setPendingWorks(uploads);
+      setPendingWorks(loadPendingUploads(userId).map(draftToWork));
     };
 
     load();
@@ -76,115 +71,108 @@ export const CreatorDashboardPage: React.FC = () => {
     setPendingWorks((prev) => [draftToWork(full), ...prev]);
   };
 
-  const savePointer = () => {
-    savePaymentPointer(userId, paymentPointer);
-  };
-
   if (!user || !profile) {
     return (
-      <div className="page-mint creator-workspace">
-        <p>Loading workspace...</p>
+      <div className="page-workspace workspace-loading">
+        <p>Loading creator workspace…</p>
       </div>
     );
   }
 
   return (
-    <div className="page-mint">
-      <div className="creator-workspace">
-        <header className="creator-workspace-header">
-          <div className="creator-brand">
-            <div className="creator-brand-icon">K</div>
+    <div className="page-workspace">
+      <div className="workspace-shell">
+        <header className="workspace-header">
+          <div className="workspace-brand">
+            <div className="workspace-brand-mark">K</div>
             <div>
-              <div className="creator-brand-title">Kulthera</div>
-              <div className="creator-brand-sub">Creator Workspace</div>
+              <div className="workspace-brand-title">Kulthera</div>
+              <div className="workspace-brand-sub">Creator Workspace</div>
             </div>
           </div>
-          <div className="creator-header-actions">
-            <button type="button" className="mint-btn-outline" onClick={() => navigate('/')}>
+          <div className="workspace-header-actions">
+            <button type="button" className="heritage-btn-secondary" onClick={() => navigate('/')}>
               Museum lobby
             </button>
-            <button type="button" className="mint-btn-outline" onClick={logout}>
+            <button type="button" className="heritage-btn-secondary" onClick={logout}>
               Logout
             </button>
           </div>
         </header>
 
-        <p className="mint-kicker">Creator management dashboard</p>
-        <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', marginBottom: 24, lineHeight: 1.3 }}>
+        <p className="workspace-kicker">Creator management</p>
+        <h1 className="workspace-title">
           Track success, control funds, and prepare exhibits for review.
         </h1>
 
-        <div className="creator-stats-row">
-          <div className="creator-stat-card">
-            <h3>Total minutes streamed</h3>
-            <p className="creator-stat-value">{profile.minutesStreamed}</p>
+        <div className="workspace-analytics-row">
+          <div className="workspace-analytics-card">
+            <h4>Total views</h4>
+            <p className="workspace-stat-value-sm">{profile.totalViews.toLocaleString()}</p>
           </div>
-          <div className="creator-stat-card">
-            <h3>Earnings summary</h3>
-            <div className="creator-stat-split">
+          <div className="workspace-analytics-card">
+            <h4>Time spent</h4>
+            <p className="workspace-stat-value-sm">
+              {formatDuration(profile.totalAttentionSeconds)}
+            </p>
+          </div>
+          <div className="workspace-analytics-card">
+            <h4>Monetized time</h4>
+            <p className="workspace-stat-value-sm">
+              {formatDuration(profile.totalMonetizedSeconds)}
+            </p>
+          </div>
+        </div>
+
+        <div className="workspace-stats-grid">
+          <div className="workspace-stat-card">
+            <h3>Minutes streamed</h3>
+            <p className="workspace-stat-value">{profile.minutesStreamed}</p>
+          </div>
+          <div className="workspace-stat-card">
+            <h3>Earnings</h3>
+            <div className="workspace-stat-split">
               <div>
                 <strong>${profile.webMonetizationUsd.toFixed(2)}</strong>
-                <span>Web Monetization streams</span>
+                <span>Web Monetization (demo)</span>
               </div>
               <div>
                 <strong>${profile.directTipsUsd.toFixed(2)}</strong>
-                <span>Direct tips received</span>
+                <span>Direct tips (demo)</span>
               </div>
             </div>
           </div>
-          <div className="creator-stat-card">
+          <div className="workspace-stat-card">
             <h3>Payment pointer</h3>
             <input
               type="text"
-              className="mint-input"
+              className="heritage-input"
               value={paymentPointer}
               onChange={(e) => setPaymentPointer(e.target.value)}
-              onBlur={savePointer}
-              placeholder="$ilp.uphold.com/yourname"
+              onBlur={() => savePaymentPointer(userId, paymentPointer)}
+              placeholder="$ilp.interledger-test.dev/yourname"
             />
-            <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: 8 }}>
-              Paste your Interledger wallet / payment pointer here.
+            <p className="workspace-stat-hint">
+              Interledger wallet where streamed support is routed during exhibits.
             </p>
           </div>
         </div>
 
         <ContentUploadPipeline onSubmit={handleUpload} />
 
-        <section className="exhibit-rows">
+        <section className="workspace-exhibits">
           <h2>Your exhibits</h2>
-          <p style={{ color: '#94a3b8', marginBottom: 16, fontSize: '0.9rem' }}>
-            Analytics stored locally for demo. New uploads appear with pending review status.
+          <p className="workspace-exhibits-intro">
+            Time-attention is measurable—each row shows views, dwell time, and demo test support.
           </p>
 
           {allWorks.length === 0 ? (
-            <p style={{ color: '#64748b' }}>No exhibits yet — upload your first work above.</p>
+            <p className="workspace-exhibits-intro">Upload your first work above.</p>
           ) : (
             allWorks.map((work) => (
               <ExhibitRow key={work.id} work={work} creatorName={profile.name} />
             ))
           )}
-        </section>
-
-        <section style={{ marginTop: 32 }}>
-          <h2 style={{ fontSize: '1.1rem', marginBottom: 12 }}>Aggregate (mock)</h2>
-          <div className="creator-stats-row">
-            <div className="creator-stat-card">
-              <h3>Total views</h3>
-              <p className="creator-stat-value">{profile.totalViews}</p>
-            </div>
-            <div className="creator-stat-card">
-              <h3>Time spent</h3>
-              <p className="creator-stat-value" style={{ fontSize: '1.5rem' }}>
-                {formatDuration(profile.totalAttentionSeconds)}
-              </p>
-            </div>
-            <div className="creator-stat-card">
-              <h3>Monetized time</h3>
-              <p className="creator-stat-value" style={{ fontSize: '1.5rem' }}>
-                {formatDuration(profile.totalMonetizedSeconds)}
-              </p>
-            </div>
-          </div>
         </section>
       </div>
     </div>
@@ -195,33 +183,28 @@ function ExhibitRow({ work, creatorName }: { work: CreatorWork; creatorName: str
   const isAudio = work.mediaType === 'audio';
 
   return (
-    <div className="exhibit-row">
-      <img src={work.thumbnailUrl} alt="" className="exhibit-row-thumb" />
+    <div className="workspace-exhibit-row">
+      <img src={work.thumbnailUrl} alt="" className="workspace-exhibit-thumb" />
       <div>
-        <p className="exhibit-row-title">
+        <p className="workspace-exhibit-title">
           {work.title}
           {work.status === 'pending_review' && (
-            <span className="badge-pending">Pending review</span>
+            <span className="badge-pending-review">Pending review</span>
           )}
         </p>
-        <p className="exhibit-row-by">
-          by {creatorName} · {work.roomName}
-          {isAudio && ' · 🎵 Audio'}
+        <p className="workspace-exhibit-meta">
+          {creatorName} · {work.roomName}
+          {isAudio ? ' · Audio' : ''}
         </p>
         {isAudio && work.mediaUrl && (
-          <audio
-            controls
-            preload="metadata"
-            src={work.mediaUrl}
-            style={{ width: '100%', maxWidth: 320, marginTop: 8, height: 36 }}
-          />
+          <audio controls preload="metadata" src={work.mediaUrl} style={{ width: '100%', maxWidth: 360, marginTop: 10 }} />
         )}
       </div>
-      <div className="exhibit-row-stats">
+      <div className="workspace-exhibit-stats">
         <div>{work.views} views</div>
         <div>{formatDuration(work.attentionSeconds)} attention</div>
         <div>{formatDuration(work.monetizedSeconds)} monetized</div>
-        <div className="exhibit-row-earnings">${work.testSupportUsd.toFixed(2)} test</div>
+        <div className="workspace-exhibit-earnings">${work.testSupportUsd.toFixed(2)} test</div>
       </div>
     </div>
   );

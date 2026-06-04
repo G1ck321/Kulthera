@@ -1,0 +1,246 @@
+/**
+ * Kulthera — Modern African Heritage design system
+ * Canvas, charcoal, terracotta, ochre, indigo. No SaaS mint.
+ */
+
+:root {
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-body: 'Source Sans 3', 'Plus Jakarta Sans', sans-serif;
+  --font-ui: 'Source Sans 3', sans-serif;
+
+  /* Surfaces */
+  --canvas: #f7f3ed;
+  --canvas-deep: #ebe4d8;
+  --plaster: #faf8f4;
+  --charcoal: #1c1917;
+  --onyx: #141210;
+  --ink: #292524;
+
+  /* Earth accents */
+  --terracotta: #b4532a;
+  --terracotta-deep: #8b3a22;
+  --ochre: #c9a227;
+  --ochre-muted: #d4bc7a;
+  --sahel: #e8dcc8;
+  --indigo: #2c3e6b;
+  --indigo-muted: #4a5f8c;
+
+  /* Semantic (legacy aliases) */
+  --brand-black: var(--charcoal);
+  --brand-white: var(--plaster);
+  --brand-green: var(--terracotta);
+  --brand-green-dark: var(--terracotta-deep);
+  --brand-green-soft: #f5e6dc;
+  --brand-gray: var(--canvas-deep);
+  --brand-gray-border: #d6cec0;
+
+  --bg-page: var(--canvas);
+  --bg-elevated: var(--plaster);
+  --bg-card: var(--plaster);
+  --bg-dark: var(--onyx);
+  --text-dark: var(--charcoal);
+  --text-light: var(--ink);
+  --text-muted: #78716c;
+  --text-on-dark: var(--plaster);
+
+  --border-light: 1px solid #d6cec0;
+  --border-warm: 1px solid rgba(180, 83, 42, 0.25);
+  --shadow-sm: 0 2px 12px rgba(28, 25, 23, 0.06);
+  --shadow-md: 0 8px 28px rgba(28, 25, 23, 0.1);
+  --shadow-lg: 0 16px 40px rgba(28, 25, 23, 0.12);
+
+  --mint-accent: var(--terracotta);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --transition-normal: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Buttons */
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--plaster);
+  background: rgba(255, 253, 249, 0.12);
+  border: 1px solid rgba(255, 253, 249, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 253, 249, 0.22);
+  border-color: rgba(255, 253, 249, 0.55);
+  transform: translateY(-1px);
+}
+
+.btn-terracotta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--plaster);
+  background: var(--terracotta);
+  border: none;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.btn-terracotta:hover {
+  background: var(--terracotta-deep);
+}
+
+.btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--plaster);
+  background: transparent;
+  border: 1px solid rgba(255, 253, 249, 0.5);
+  transition: all var(--transition-normal);
+}
+
+.btn-outline-light:hover {
+  background: rgba(255, 253, 249, 0.1);
+}
+
+/* Demo status pill */
+.demo-status-badge {
+  position: fixed;
+  top: 72px;
+  right: 20px;
+  z-index: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(20, 18, 16, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 253, 249, 0.15);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 253, 249, 0.9);
+}
+
+.demo-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ochre);
+  animation: demo-pulse 2s ease infinite;
+}
+
+@keyframes demo-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.5); }
+  50% { opacity: 0.85; box-shadow: 0 0 0 6px rgba(201, 162, 39, 0); }
+}
+
+/* Form inputs (heritage) */
+.heritage-input,
+.heritage-textarea,
+.heritage-select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--brand-gray-border);
+  background: var(--plaster);
+  color: var(--charcoal);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+
+.heritage-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.heritage-label {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin: 14px 0 6px;
+  font-weight: 600;
+}
+
+.heritage-btn-primary {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--terracotta);
+  color: var(--plaster);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background var(--transition-normal);
+}
+
+.heritage-btn-primary:hover {
+  background: var(--terracotta-deep);
+}
+
+.heritage-btn-secondary {
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--brand-gray-border);
+  background: var(--plaster);
+  color: var(--charcoal);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.heritage-btn-secondary:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+}
+
+/* Legacy alias — prefer heritage-btn-* in new code */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--terracotta);
+  color: var(--plaster);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition-normal);
+}
+
+.btn-primary:hover {
+  background: var(--terracotta-deep);
+}

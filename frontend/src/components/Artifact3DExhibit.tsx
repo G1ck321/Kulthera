@@ -159,7 +159,7 @@ export const Artifact3DExhibit: React.FC<Artifact3DExhibitProps> = ({
           <p style={{ margin: '2px 0 0 0', fontSize: '12px', color: '#64748b' }}>{culturalOrigin}</p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#10b981', background: 'rgba(16, 185, 129, 0.08)', padding: '4px 10px', borderRadius: '12px', border: '1px solid rgba(16,185,129,0.15)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#b4532a', background: 'rgba(180, 83, 42, 0.1)', padding: '4px 10px', borderRadius: '12px', border: '1px solid rgba(180, 83, 42, 0.2)' }}>
           <ShieldCheck size={12} />
           <span>Authenticated Archive</span>
         </div>

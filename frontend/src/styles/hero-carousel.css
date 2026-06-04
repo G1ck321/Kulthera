@@ -69,8 +69,8 @@
 }
 
 .hero-carousel-nav:hover {
-  background: var(--brand-green, #22c55e);
-  border-color: var(--brand-green, #22c55e);
+  background: var(--terracotta, #b4532a);
+  border-color: var(--terracotta, #b4532a);
 }
 
 .hero-carousel-nav.prev {
@@ -102,6 +102,6 @@
 }
 
 .hero-carousel-dots button.active {
-  background: var(--brand-green, #22c55e);
-  border-color: var(--brand-green, #22c55e);
+  background: var(--ochre, #c9a227);
+  border-color: var(--ochre, #c9a227);
 }

@@ -263,7 +263,7 @@ export const MusicExhibit: React.FC<MusicExhibitProps> = ({ src, title, artistNa
 
           {/* Secure Download Counter Label */}
           <div style={{ textAlign: 'center', fontSize: '10px', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-            <span style={{ display: 'inline-block', width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+            <span style={{ display: 'inline-block', width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#b4532a' }} />
             <span>Digital exhibit watermarking active. Direct downloading disabled.</span>
           </div>
         </>

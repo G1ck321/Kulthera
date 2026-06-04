@@ -1,0 +1,83 @@
+.auth-gateway {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: var(--canvas);
+  background-image: url('/assets/tribal-africa-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.auth-gateway::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(247, 243, 237, 0.88);
+  pointer-events: none;
+}
+
+.auth-gateway > * {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-gateway-brand h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  color: var(--charcoal);
+  text-align: center;
+}
+
+.auth-gateway-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--terracotta);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-gateway-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 24px;
+  background: var(--plaster);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--brand-gray-border);
+}
+
+.role-toggle-heritage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--brand-gray-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.role-toggle-heritage button {
+  padding: 12px 8px;
+  border: none;
+  background: var(--canvas);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.role-toggle-heritage button.active {
+  background: var(--terracotta);
+  color: var(--plaster);
+}
+
+.auth-gateway-footer {
+  margin-top: 14px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+}

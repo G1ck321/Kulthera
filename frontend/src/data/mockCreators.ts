@@ -227,10 +227,38 @@ export const MOCK_CREATOR_PROFILES: CreatorProfile[] = [
 ];
 
 export const MUSEUM_ROOMS = [
-  { slug: 'sound-roots', name: 'Sound Roots', exhibits: 3, visitors: 18 },
-  { slug: 'painted-memory', name: 'Painted Memory', exhibits: 3, visitors: 31 },
-  { slug: 'artifact-house', name: 'Artifact House', exhibits: 2, visitors: 42 },
-  { slug: 'living-stories', name: 'Living Stories', exhibits: 2, visitors: 15 },
+  {
+    slug: 'sound-roots',
+    name: 'Sound Roots',
+    tagline: 'Rhythms, griot traditions, and voices across the continent',
+    exhibits: 3,
+    visitors: 18,
+    imageUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=900',
+  },
+  {
+    slug: 'painted-memory',
+    name: 'Painted Memory',
+    tagline: 'Contemporary canvases and Sahel-inspired colour studies',
+    exhibits: 3,
+    visitors: 31,
+    imageUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=900',
+  },
+  {
+    slug: 'artifact-house',
+    name: 'Artifact House',
+    tagline: 'Bronze, textile, and ceremonial objects as living archives',
+    exhibits: 2,
+    visitors: 42,
+    imageUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=900',
+  },
+  {
+    slug: 'living-stories',
+    name: 'Living Stories',
+    tagline: 'Oral histories, essays, and community memory',
+    exhibits: 2,
+    visitors: 15,
+    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=900',
+  },
 ] as const;
 
 export function getMockCreatorById(id: string): CreatorProfile | undefined {

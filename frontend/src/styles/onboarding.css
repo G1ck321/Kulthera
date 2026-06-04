@@ -16,7 +16,7 @@
   padding: 32px;
   border-radius: 20px;
   background: linear-gradient(145deg, #12121a 0%, #1a1528 100%);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(180, 83, 42, 0.25);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
   color: #f8fafc;
 }
@@ -27,7 +27,7 @@
 }
 
 .welcome-icon {
-  color: #10b981;
+  color: var(--terracotta);
   margin-bottom: 16px;
 }
 
@@ -80,11 +80,16 @@
   transition: all 0.2s ease;
 }
 
-.art-style-chip:hover,
+.art-style-chip:hover {
+  border-color: rgba(180, 83, 42, 0.5);
+  background: rgba(180, 83, 42, 0.12);
+  color: #f8fafc;
+}
+
 .art-style-chip.selected {
-  border-color: #10b981;
-  background: rgba(16, 185, 129, 0.15);
-  color: #fff;
+  border-color: var(--terracotta);
+  background: rgba(180, 83, 42, 0.22);
+  color: #faf8f4;
 }
 
 .chip-emoji {
@@ -110,7 +115,7 @@
 }
 
 .signup-step.active {
-  background: #10b981;
+  background: var(--terracotta);
 }
 
 .role-toggle {
@@ -130,8 +135,8 @@
 }
 
 .role-toggle button.active {
-  border-color: #10b981;
-  background: rgba(16, 185, 129, 0.12);
+  border-color: var(--terracotta);
+  background: rgba(180, 83, 42, 0.12);
   color: #fff;
 }
 
@@ -173,9 +178,9 @@
   gap: 8px;
   padding: 12px 16px;
   border-radius: 10px;
-  border: 1px dashed rgba(16, 185, 129, 0.5);
+  border: 1px dashed rgba(180, 83, 42, 0.5);
   cursor: pointer;
-  color: #10b981;
+  color: var(--terracotta);
   font-size: 0.9rem;
 }
 
@@ -206,7 +211,7 @@
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #10b981;
+  color: var(--terracotta);
 }
 
 .exhibit-entry-artist {
@@ -224,7 +229,7 @@
 .exhibit-entry-context h4 {
   margin: 0 0 8px;
   font-size: 0.85rem;
-  color: #10b981;
+  color: var(--terracotta);
 }
 
 .exhibit-entry-funding {
@@ -294,9 +299,9 @@
 }
 
 .carousel-nav {
-  background: rgba(16, 185, 129, 0.2);
+  background: rgba(180, 83, 42, 0.2);
   border: none;
-  color: #10b981;
+  color: var(--terracotta);
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -323,7 +328,7 @@
 }
 
 .carousel-dot.active {
-  background: #10b981;
+  background: var(--terracotta);
 }
 
 .carousel-counter {
@@ -343,7 +348,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #10b981;
+  color: var(--terracotta);
   text-decoration: none;
   margin-bottom: 20px;
 }
@@ -364,7 +369,7 @@
 }
 
 .artist-room-tips {
-  color: #10b981;
+  color: var(--terracotta);
   font-size: 0.9rem;
   margin-bottom: 16px;
 }
@@ -406,7 +411,7 @@
   padding: 8px 16px;
   border-radius: 8px;
   border: none;
-  background: rgba(16, 185, 129, 0.2);
+  background: rgba(180, 83, 42, 0.2);
   color: #fff;
   cursor: pointer;
 }
@@ -419,7 +424,7 @@
 
 .tip-thanks {
   font-size: 0.85rem;
-  color: #10b981;
+  color: var(--terracotta);
 }
 
 .monetization-elapsed {
