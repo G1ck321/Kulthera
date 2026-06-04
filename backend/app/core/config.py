@@ -1,37 +1,31 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field
-from typing import ClassVar
-import os
 
 class Settings(BaseSettings):
     """
     Application Settings configuration class.
-    Uses pydantic-settings to automatically load and validate environment variables
-    from a .env file or host environment.
+    Automatically handles environment variables using built-in dotenv support.
     
-    Priority: Environment variable DATABASE_URL > .env file > default SQLite fallback.
-    On Render: Set DATABASE_URL to your Supabase PostgreSQL connection string.
+    Priority: Host Environment > .env File > Local SQLite Fallback.
     """
     
     # Core app configurations
-    ENVIRONMENT: str = Field(default="development", description="The current running environment (development, staging, production)")
+    ENVIRONMENT: str = Field(default="development")
     
-    # Database connection string
-    # On Render/production: set DATABASE_URL env var to your Supabase PostgreSQL URL
-    # Format: postgresql+asyncpg://user:password@host:port/database
-    # Locally: defaults to SQLite for zero-config prototyping
+    # DATABASE FALLBACK: If DATABASE_URL is missing from Render or your local .env,
+    # it will automatically fall back to using your local SQLite kultr database.
     DATABASE_URL: str = Field(
         default="sqlite+aiosqlite:///./kultr_local.db", 
-        description="The primary database async connection URL (Supabase PostgreSQL or local SQLite)"
+        description="Primary async connection URL. Falls back to local SQLite if empty."
     )
     
-    # CORS (Cross-Origin Resource Sharing) origins allowed to make API calls to the server
+    # FRONTEND ORIGIN: Updated to point directly to your live Vercel application.
     FRONTEND_ORIGIN: str = Field(
-        default="http://localhost:5173", 
+        default="https://kult.vercel.app", 
         description="Allowed frontend origin for secure CORS handling"
     )
 
-    # Configuration options using Pydantic SettingsConfigDict
+    # Configuration options to load the .env file locally
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

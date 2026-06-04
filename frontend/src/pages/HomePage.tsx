@@ -128,7 +128,7 @@ export const HomePage: React.FC = () => {
         <div className="featured-card">
           <div className="featured-content">
             <img
-              src="https://api.dicebear.com/7.x/personas/svg?seed=KokariWalker"
+              src="/assets/Kokayi.jpg"
               alt="The Kokari Walker"
               className="featured-image"
             />

@@ -111,7 +111,8 @@ CREATE TABLE IF NOT EXISTS monetization_events (
     asset_code VARCHAR,
     asset_scale INTEGER,
     raw_event JSONB,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    wallet_address VARCHAR
 );
 
 CREATE INDEX IF NOT EXISTS idx_me_session ON monetization_events(exhibit_view_session_id);
