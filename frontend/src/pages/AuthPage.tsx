@@ -20,6 +20,7 @@ interface FormData {
   email: string;
   password: string;
   name: string;
+  wallet: string;
 }
 
 export const AuthPage: React.FC = () => {
@@ -34,6 +35,7 @@ export const AuthPage: React.FC = () => {
     email: '',
     password: '',
     name: '',
+    wallet:''
   });
 
   const completeSignup = async (creatorStyle?: string) => {
@@ -162,12 +164,21 @@ export const AuthPage: React.FC = () => {
               value={formData.password}
               onChange={(e) => setFormData((p) => ({ ...p, password: e.target.value }))}
               placeholder="••••••••"
+              />
+              <label className="heritage-label">Wallet Address</label>
+            <input
+              className="heritage-input"
+              type="text"
+              value={formData.wallet}
+              onChange={(e) => setFormData((p) => ({ ...p, wallet: e.target.value }))}
+              placeholder="••••••••"
             />
             <button type="submit" className="heritage-btn-primary" disabled={isLoading}>
               {isLoading ? (
                 <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                   <Loader size={18} className="spin" /> Please wait
-                </span>
+                  </span>
+                  
               ) : (
                 'Enter Kulthera'
               )}

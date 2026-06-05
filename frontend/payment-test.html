@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Payments Test Portal</title>
+</head>
+<body>
+    <h1>Startup Payment Test</h1>
+    
+    <!-- Step A: Trigger the Grant Initiator -->
+    <button id="startPaymentBtn" style="padding: 10px 20px; font-size: 16px;">
+        💸 Connect Wallet & Authorize Payment
+    </button>
+    
+    <div id="status" style="margin-top: 20px; font-weight: bold;"></div>
+
+  <script type="module">
+    const statusDiv = document.getElementById('status');
+
+    // 1. CATCH THE REDIRECT FROM WALLET
+    const urlParams = new URLSearchParams(window.location.search);
+    const interactRef = urlParams.get('interact_ref');
+    const result = urlParams.get('result');
+
+    if (result === 'grant_approved' && interactRef) {
+        statusDiv.innerHTML = `<span style="color: blue;">🔄 Detected approved grant! Passing reference code to backend terminal...</span>`;
+        console.log("Found interact_ref in URL:", interactRef);
+        
+        // Dispatch code straight to your backend Express port 4000 bridge
+        fetch('http://localhost:4000/finalize-payment', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ interactRef: interactRef })
+        })
+        .then(async (res) => {
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(`Server responded with status ${res.status}: ${errText}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log("Backend acknowledged finalization:", data);
+            statusDiv.innerHTML = `<span style="color: green; font-size: 18px;">🎉 Success! Code transmitted. Look at your backend terminal window now!</span>`;
+        })
+        .catch(err => {
+            console.error("Transmission failed:", err);
+            statusDiv.innerHTML = `<span style="color: red;">❌ Failed to alert terminal bridge: ${err.message}. Check your F12 network tab for details.</span>`;
+        });
+    } else if (result === 'invalid_interaction') {
+        statusDiv.innerHTML = `<span style="color: red;">❌ Interaction rejected by wallet session configuration. Retry from step 1.</span>`;
+    }
+
+    // 2. TRIGGER STEP 1 CLICK HANDLER
+    document.getElementById('startPaymentBtn').addEventListener('click', async () => {
+        statusDiv.innerHTML = "⏳ Initializing ledger sequence on backend...";
+        
+        try {
+            const response = await fetch('http://localhost:4000/create-grant', { method: 'POST' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const data = await response.json();
+            if (data.redirectUrl) {
+                statusDiv.innerHTML = "↪️ Redirecting you to wallet dashboard...";
+                window.location.href = data.redirectUrl; 
+            } else {
+                statusDiv.innerHTML = `❌ Failed: ${data.error || "No redirect URL sent."}`;
+            }
+        } catch (err) {
+            statusDiv.innerHTML = `<span style="color: red;">❌ Connection Error to bridge server: ${err.message}</span>`;
+        }
+    });
+</script>
+</body>
+</html>
