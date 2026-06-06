@@ -8,13 +8,16 @@
   background: linear-gradient(180deg, #0f0f14 0%, #1a1528 40%, #12121a 100%);
   color: #faf8f4;
 }
-.p-3{
+
+.p-3 {
   padding: 2px;
 }
-.mp-0{
+
+.mp-0 {
   margin: 0;
   padding: 0;
 }
+
 .gallery-hero {
   padding: clamp(48px, 6vw, 72px) 20px;
   text-align: center;
@@ -167,13 +170,17 @@
   margin: 0 auto;
   padding: 0 20px;
   margin-bottom: 60px;
+}
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
+  .gallery-grid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 16px;
   }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
+  .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
@@ -185,10 +192,10 @@
   border-radius: 8px;
   overflow: hidden;
   transition: all var(--transition-fast);
+}
 
-  &:hover {
-    transform: translateY(-8px);
-  }
+.gallery-card:hover {
+  transform: translateY(-8px);
 }
 
 .card-image-wrapper {
@@ -236,10 +243,10 @@
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
+}
 
-  &:hover {
-    transform: scale(1.05);
-  }
+.card-action:hover {
+  transform: scale(1.05);
 }
 
 /* Card info */
@@ -275,110 +282,106 @@
   text-transform: capitalize;
 }
 
-/* Lightbox Modal */
+/* ==========================================================================
+   FIXED LIGHTBOX MODAL RESPONSIVE OVERHAUL
+   ========================================================================== */
+
 .lightbox-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(4px);
   z-index: 2000;
   display: flex;
-  align-items: center;
+  
+  /* FIXED: Starts content from top layout context so vertical overflow doesn't clip headers */
+  align-items: flex-start;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 20px;
+  
+  /* FIXED: Enables smooth native touch scrolling on the modal container backdrop */
+  overflow-y: auto;
 }
 
 .lightbox-close {
-  position: absolute;
+  /* FIXED: Turned to fixed placement so the action button stays visible when scrolling text panels on mobile devices */
+  position: fixed;
   top: 20px;
   right: 20px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--text-light);
+  color: var(--text-light, #faf8f4);
   cursor: pointer;
-  padding: 8px;
-  border-radius: 4px;
-  transition: all var(--transition-fast);
-  z-index: 2001;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
+  padding: 10px;
+  border-radius: 6px;
+  transition: all 200ms ease;
+  z-index: 2002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Lightbox content */
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* Lightbox content grid card */
 .lightbox-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
-  max-width: 1200px;
+  max-width: 1150px;
   width: 100%;
   background: #12121a;
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg, 12px);
   overflow: hidden;
-  max-height: 90vh;
-  animation: slideIn 300ms ease;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    max-height: unset;
-  }
+  
+  /* FIXED: Automatically handles vertical center space on desktops, drops smoothly on phones */
+  margin-top: auto;
+  margin-bottom: auto;
+  animation: slideIn 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes slideIn {
   from {
-    transform: scale(0.95);
+    transform: translateY(15px) scale(0.98);
     opacity: 0;
   }
   to {
-    transform: scale(1);
-    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 .lightbox-image-wrapper {
-  aspect-ratio: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 450px;
   overflow: hidden;
-  background: var(--bg-card);
-
-  @media (max-width: 1024px) {
-    aspect-ratio: auto;
-    max-height: 60vh;
-  }
+  background: var(--bg-card, #1a1528);
 }
 
 .lightbox-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-/* Info panel */
+/* Info presentation panel */
 .lightbox-info {
   padding: 40px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 24px;
-  overflow-y: auto;
-
-  @media (max-width: 1024px) {
-    padding: 30px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 20px;
-  }
 }
 
 .lightbox-title {
   font-size: 32px;
   margin: 0;
-  color: var(--text-light);
-
-  @media (max-width: 768px) {
-    font-size: 24px;
-  }
+  color: var(--text-light, #faf8f4);
 }
 
 .info-meta {
@@ -409,7 +412,7 @@
   border: 1px solid rgba(45, 90, 61, 0.3);
   border-radius: 4px;
   font-size: 12px;
-  color: #2D5A3D;
+  color: #a3e635;
 }
 
 .lightbox-description {
@@ -429,7 +432,7 @@
 .cultural-context h4 {
   margin: 0 0 8px 0;
   font-size: 13px;
-  color: #2D5A3D;
+  color: #4ade80;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -467,7 +470,7 @@
 .creator-name {
   margin: 0;
   font-size: 14px;
-  color: var(--text-light);
+  color: var(--text-light, #faf8f4);
 }
 
 .creator-bio {
@@ -486,7 +489,7 @@
   gap: 4px;
 }
 
-/* Actions */
+/* Actions panel grid link matrix */
 .lightbox-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -501,14 +504,14 @@
   color: #1A1614;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--transition-fast);
-
+  transition: all var(--transition-fast, 150ms);
 }
 
-  .btn-support:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
-  }
+.btn-support:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
+}
+
 .btn-close-secondary {
   padding: 12px 20px;
   background: rgba(212, 175, 55, 0.1);
@@ -517,14 +520,47 @@
   color: #D4AF37;
   font-weight: 500;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-fast, 150ms);
+}
 
-  &:hover {
-    background: rgba(212, 175, 55, 0.15);
+.btn-close-secondary:hover {
+  background: rgba(212, 175, 55, 0.15);
+}
+
+/* ==========================================================================
+   MEDIA QUERY RESPONSIVE COMPACT SIZES
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .lightbox-overlay {
+    padding: 16px 12px;
+  }
+
+  .lightbox-content {
+    /* FIXED: Swaps layout side-by-side split structure into a responsive block flow stream */
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 0;
+    margin-bottom: 40px;
+  }
+
+  .lightbox-image-wrapper {
+    min-height: unset;
+    /* FIXED: Ensures horizontal widescreen presentation on tablets and handheld devices */
+    aspect-ratio: 4 / 3;
+    max-height: 45vh;
+  }
+
+  .lightbox-info {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .lightbox-title {
+    font-size: 24px;
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .gallery-hero {
     padding: 40px 20px;
@@ -535,6 +571,14 @@
   }
 
   .lightbox-actions {
-    grid-template-columns: 1fr;
+    /* FIXED: Forces actions side-by-side setup to run single-file on tight interfaces */
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .lightbox-info {
+    padding: 16px;
+    gap: 16px;
   }
 }

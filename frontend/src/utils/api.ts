@@ -1,7 +1,7 @@
 import { Room, Exhibit, ViewSession } from '../types/museum';
 
 // Use local port 8000 for FastAPI communications during development
-const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 'https://my-backend-1-s57s.onrender.com';
+const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:8000';
 
 /**
  * Clean Fetch wrapper that automatically handles non-200 responses.

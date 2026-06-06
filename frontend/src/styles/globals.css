@@ -22,6 +22,7 @@ border-color: rgb(172, 172, 172);
 border-color: var(--ink);
 cursor: pointer;
 }
+
 body {
   background: var(--canvas);
   color: var(--ink);

@@ -10,7 +10,7 @@
 .header-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 12px 24px;
+  padding: 9px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -20,20 +20,35 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   text-decoration: none;
+  overflow: hidden; /* Hides everything outside the 250x150 boundary */
+  position: relative;
 }
 
 .logo-img {
-  height: 32px;
-  width: auto;
+  height: 48px;
+  width: 80%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  /* object-position: 89px center; */
+ /* Syntax: clip-path: inset(top right bottom left); */
+clip-path: inset(0 63.9% 0 22%);
+filter: invert(1);
+border-top-left-radius: 80%;
+/* border-top-right-radius: ; */
+border-bottom-left-radius: 90%;
 }
 
 .logo-text {
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 700;
+  flex: 1 1 1;
   color: var(--charcoal);
+  /* margin-right: 15px; */
 }
 
 .nav-desktop {
@@ -50,7 +65,7 @@
 .nav-link {
   text-decoration: none;
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   position: relative;
   padding: 6px 0;
@@ -70,22 +85,23 @@
   height: 2px;
   background: var(--terracotta);
 }
-
 .header-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
+/*reduce size*/
 .nav-auth-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: var(--radius-sm);
   background: var(--terracotta);
   color: var(--plaster);
-  font-size: 0.85rem;
+  font-size: 0.6rem;
   font-weight: 600;
   text-decoration: none;
   border: none;

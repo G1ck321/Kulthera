@@ -233,7 +233,7 @@ export const MUSEUM_ROOMS = [
     tagline: 'Rhythms, griot traditions, and voices across the continent',
     exhibits: 3,
     visitors: 18,
-    imageUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=900',
+    imageUrl: "assets/Guitar.jpg",
   },
   {
     slug: 'painted-memory',
@@ -258,7 +258,7 @@ export const MUSEUM_ROOMS = [
     tagline: 'Oral histories, essays, and community memory',
     exhibits: 2,
     visitors: 15,
-    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=900',
+    imageUrl: '/assets/reading.jpg',
   },
 ] as const;
 

@@ -1,14 +1,6 @@
 /**
  * Gallery Page
- * 
- * Showcases paintings and artwork exhibits in a responsive grid
- * 
- * Why a dedicated gallery?
- * - Visual art requires different UX than audio (no playback)
- * - Need expanded lightbox view for high-res artwork
- * - Filters by exhibit type (painting, artifact, story)
- * - Lower bandwidth than video, higher impact than text
- * 
+ * * Showcases paintings and artwork exhibits in a responsive grid
  * Design pattern: Grid → Click to expand → Show creator info + monetization
  */
 
@@ -54,7 +46,6 @@ export const GalleryPage: React.FC = () => {
 
   /**
    * Load all visual exhibits (paintings, artifacts, stories)
-   * Excludes audio exhibits (those go to Sound Roots)
    */
   useEffect(() => {
     const loadExhibits = async () => {
@@ -76,10 +67,6 @@ export const GalleryPage: React.FC = () => {
     loadExhibits();
   }, [filter]);
 
-  /**
-   * Filter exhibits by type
-   * Shows all if filter is 'all', otherwise shows only selected type
-   */
   const filteredExhibits = exhibits.filter(
     exhibit => filter === 'all' || exhibit.mediaType === filter
   );
@@ -132,6 +119,7 @@ export const GalleryPage: React.FC = () => {
           showTimer
         />
       )}
+
       {/* Header */}
       <div className="gallery-hero">
         <h1>African Artwork Gallery</h1>
@@ -205,14 +193,11 @@ export const GalleryPage: React.FC = () => {
                 alt={exhibit.title}
                 className="card-image"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    '/assets/paint2.jpg';
+                  (e.target as HTMLImageElement).src = '/assets/paint2.jpg';
                 }}
               />
               <div className="card-overlay">
-                <button className="card-action">
-                  View
-                </button>
+                <button className="card-action">View</button>
               </div>
             </div>
             <div className="card-info">
@@ -227,31 +212,25 @@ export const GalleryPage: React.FC = () => {
       {/* Lightbox Modal */}
       {selectedExhibit && (
         <div className="lightbox-overlay" onClick={() => setSelectedExhibit(null)}>
-          <button
-            className="lightbox-close"
-            onClick={() => setSelectedExhibit(null)}
-          >
+          <button className="lightbox-close" onClick={() => setSelectedExhibit(null)}>
             <X size={24} />
           </button>
 
-          <div
-            className="lightbox-content"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Image */}
-            <div className="lightbox-image-wrapper pl-2 pt-2 p-3">
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            {/* Image Wrapper */}
+            <div className="lightbox-image-wrapper">
               <img
-                src={selectedExhibit.mediaUrl ||"assets/paint.jpg"}
+                src={selectedExhibit.mediaUrl || "assets/paint.jpg"}
                 alt={selectedExhibit.title}
                 className="lightbox-image"
               />
             </div>
 
             {/* Info panel */}
-            <div className="lightbox-info mp-0">
+            <div className="lightbox-info">
               {/* Title & Type */}
               <div>
-                <h2 className="light lightbox-title">{selectedExhibit.title}</h2>
+                <h2 className="lightbox-title">{selectedExhibit.title}</h2>
                 <div className="info-meta">
                   <span className="badge-type">{selectedExhibit.mediaType}</span>
                   {selectedExhibit.creator.country && (
@@ -264,7 +243,7 @@ export const GalleryPage: React.FC = () => {
               </div>
 
               {/* Description */}
-              <p className="light lightbox-description">
+              <p className="lightbox-description">
                 {selectedExhibit.description}
               </p>
 
@@ -305,10 +284,7 @@ export const GalleryPage: React.FC = () => {
                 >
                   Visit full room
                 </Link>
-                <button
-                  className="btn-close-secondary"
-                  onClick={() => setSelectedExhibit(null)}
-                >
+                <button className="btn-close-secondary" onClick={() => setSelectedExhibit(null)}>
                   Close
                 </button>
               </div>

@@ -10,6 +10,7 @@ import AuthPage from './pages/AuthPage';
 import ArtistRoomPage from './pages/ArtistRoomPage';
 import CreatorDashboardPage from './pages/CreatorDashboardPage';
 import './styles/globals.css';
+import PaymentTest from './pages/Payment';
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/room/:creatorSlug" element={<ArtistRoomPage />} />
               <Route path="/auth" element={<AuthPage />} />
+              <Route path="/paycheck" element={<PaymentTest />} />
               <Route
                 path="/dashboard"
                 element={

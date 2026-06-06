@@ -20,27 +20,30 @@ interface FormData {
   email: string;
   password: string;
   name: string;
-  wallet: string;
+  wallet: string; // Restored Wallet Address Support
 }
 
 export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
-  const { login, signup, error: authError, isLoading, clearError } = useAuth();
+  const { signup, login, error: authError, isLoading, clearError } = useAuth();
   const [mode, setMode] = useState<AuthMode>('login');
   const [signupStep, setSignupStep] = useState<SignupStep>('account');
   const [isCreator, setIsCreator] = useState(false);
   const [preferredStyles, setPreferredStyles] = useState<string[]>([]);
   const [showWelcome, setShowWelcome] = useState(false);
+  
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
     name: '',
-    wallet:''
+    wallet: '' // Initialized empty state string
   });
 
   const completeSignup = async (creatorStyle?: string) => {
+    // Forward wallet property right into your backend request context body
     await signup(formData.email, formData.password, formData.name, {
       isCreator,
+      wallet: formData.wallet, 
       preferredStyles: isCreator ? undefined : preferredStyles,
       creatorStyle,
     });
@@ -59,7 +62,7 @@ export const AuthPage: React.FC = () => {
         const parsed = userJson ? JSON.parse(userJson) : null;
         navigate(parsed?.isCreator ? '/dashboard' : '/');
       } catch {
-        /* handled */
+        /* handled by context */
       }
       return;
     }
@@ -164,21 +167,27 @@ export const AuthPage: React.FC = () => {
               value={formData.password}
               onChange={(e) => setFormData((p) => ({ ...p, password: e.target.value }))}
               placeholder="••••••••"
-              />
-              <label className="heritage-label">Wallet Address</label>
-            <input
-              className="heritage-input"
-              type="text"
-              value={formData.wallet}
-              onChange={(e) => setFormData((p) => ({ ...p, wallet: e.target.value }))}
-              placeholder="••••••••"
             />
+
+            {/* Render Wallet input conditionally during creation steps */}
+            {mode === 'signup' && (
+              <>
+                <label className="heritage-label">Wallet Address</label>
+                <input
+                  className="heritage-input"
+                  type="password"
+                  value={formData.wallet}
+                  onChange={(e) => setFormData((p) => ({ ...p, wallet: e.target.value }))}
+                  placeholder="0x... or near address"
+                />
+              </>
+            )}
+
             <button type="submit" className="heritage-btn-primary" disabled={isLoading}>
               {isLoading ? (
                 <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                   <Loader size={18} className="spin" /> Please wait
-                  </span>
-                  
+                </span>
               ) : (
                 'Enter Kulthera'
               )}
@@ -186,8 +195,7 @@ export const AuthPage: React.FC = () => {
           </form>
 
           <p className="auth-gateway-footer">
-            Demo gateway: the same form splits visitors into the public museum and creators into
-            their workspace.
+            Demo gateway: the same form splits visitors into the public museum and creators into their workspace.
           </p>
 
           <p style={{ textAlign: 'center', marginTop: 16, fontSize: '0.85rem' }}>

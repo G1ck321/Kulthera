@@ -236,7 +236,7 @@ export const SoundRootsPage: React.FC = () => {
       </div>
 
       {/* Info section */}
-      <div className="soundroots-info" style={{ marginInline:'400px'}}>
+      <div className="soundroots-info">
         <div className="info-card border-b">
           <h3>🌍 African Musical Traditions</h3>
           <p style={{ color:'#141210'}}>

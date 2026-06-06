@@ -21,7 +21,7 @@ import axios, { AxiosInstance, AxiosError } from 'axios';
 const API_BASE_URL =
   (import.meta as any).env?.VITE_API_BASE_URL ||
   (import.meta as any).env?.VITE_API_URL ||
-  'https://my-backend-1-s57s.onrender.com';
+  'http://localhost:8000';
 
 /**
  * Create axios instance with default configuration

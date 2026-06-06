@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     
     # FRONTEND ORIGIN: Updated to point directly to your live Vercel application.
     FRONTEND_ORIGIN: str = Field(
-        default="https://kulthera.vercel.app", 
+        default="http://localhost:5173/", 
         description="Allowed frontend origin for secure CORS handling"
     )
 

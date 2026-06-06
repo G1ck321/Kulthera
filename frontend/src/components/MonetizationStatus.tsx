@@ -55,7 +55,8 @@ export const MonetizationStatus: React.FC<MonetizationStatusProps> = ({
         WebkitBackdropFilter: 'blur(20px)',
         boxShadow: '0 12px 40px rgba(16, 185, 129, 0.15)',
         animation: 'pulseGlow 3s infinite',
-        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+        transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        opacity: ".7"
       }}
     >
       <div style={{ display: 'flex',

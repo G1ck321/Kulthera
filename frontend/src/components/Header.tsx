@@ -25,6 +25,10 @@ export const Header: React.FC = () => {
           <img
             src="/assets/kulthera-logo.png"
             alt=""
+            style={{
+              color: "black",
+              background:"transparent"
+            }}
             className="logo-img"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
