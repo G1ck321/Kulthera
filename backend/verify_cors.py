@@ -6,7 +6,7 @@ Quick test to verify OPTIONS requests work
 import requests
 import json
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "https://my-backend-1-s57s.onrender.com"
 
 print("=" * 60)
 print("🧪 Testing CORS & Auth Routes")

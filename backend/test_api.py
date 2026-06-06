@@ -7,7 +7,7 @@ Tests all critical endpoints after auth implementation
 import requests
 import json
 
-BASE_URL = "http://localhost:8000/api"
+BASE_URL = "https://my-backend-1-s57s.onrender.com/api"
 
 print("=" * 60)
 print("🧪 KULTR Backend API Test Suite")

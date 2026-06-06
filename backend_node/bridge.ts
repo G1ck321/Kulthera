@@ -8,7 +8,7 @@ import { run, stateBridge } from './transaction.js';
 const app = express();
 
 // Dynamically scale CORS domains according to environment states
-const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
+const allowedOrigin = process.env.FRONTEND_URL || 'https://kulthera.vercel.app';
 app.use(cors({ origin: allowedOrigin, credentials: true }));
 app.use(express.json());
 
