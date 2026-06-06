@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { run, stateBridge } from './transaction.ts';
+import { run, stateBridge } from './transaction.js'; 
 
 const app = express();
 app.use(cors());

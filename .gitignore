@@ -4,3 +4,4 @@
 **/dist/
 sharp/
 *.key
+*.env

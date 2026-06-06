@@ -13,22 +13,29 @@ export const stateBridge = {
 };
 
 export async function run() {
-  // Load variables from environment
+  // 1. Gather environmental variables
   const senderWalletUrl = process.env.SENDER_WALLET_URL!;
   const senderKeyId = process.env.SENDER_KEY_ID!;
-  const senderPrivateKeyPath = path.resolve(process.cwd(), process.env.SENDER_PRIVATE_KEY_PATH!);
-  
-  const senderPrivateKey = fs.readFileSync(senderPrivateKeyPath, 'utf8').trim();
   const receiverWalletUrl = process.env.RECEIVER_WALLET_URL!;
 
-  console.log('🔐 Initializing Client with Sender Cryptographic Keys...');
+  // 2. Safely resolve the key file path for both Render (Secret Files) and your Local PC
+  const senderPrivateKeyPath = process.env.RENDER
+    ? '/etc/secrets/private-key.pem' // Render's target mount path
+    : path.resolve(process.cwd(), process.env.SENDER_PRIVATE_KEY_PATH || './private-key.pem'); // Local path fallback
 
+  console.log('🔒 Reading cryptographic private key...');
+  const senderPrivateKey = fs.readFileSync(senderPrivateKeyPath, 'utf8').trim();
+
+  console.log('🔐 Initializing Client with Sender Cryptographic Keys...');
+  
+  // FIXED DUPLICATE: We only call createAuthenticatedClient ONCE using the resolved key string
   const client = await createAuthenticatedClient({
     walletAddressUrl: senderWalletUrl,
     keyId: senderKeyId,
     privateKey: senderPrivateKey,
   });
 
+  console.log('✅ Client successfully authenticated. Continuing ledger script steps...');
   // ----------------------------------------------------------------
   // STEP 1: RESOLVE BOTH WALLETS OVER THE INTERLEDGER NETWORK
   // ----------------------------------------------------------------

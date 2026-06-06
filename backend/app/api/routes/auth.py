@@ -24,6 +24,7 @@ class SignupRequest(BaseModel):
     is_creator: bool = Field(False, alias="isCreator")
     preferred_styles: Optional[list[str]] = Field(None, alias="preferredStyles")
     creator_style: Optional[str] = Field(None, alias="creatorStyle")
+    wallet:Optional[str] = None
 
 
 class LoginRequest(BaseModel):
@@ -37,6 +38,7 @@ class UserResponse(BaseModel):
     name: str
     isCreator: bool
     creatorId: Optional[int] = None
+    wallet:Optional[str] = None
     
 
 class AuthTokenResponse(BaseModel):
@@ -111,6 +113,7 @@ async def signup(request: SignupRequest, db: AsyncSession = Depends(get_db)):
         "creatorId": creator_id,
         "preferred_styles": request.preferred_styles or [],
         "creator_style": request.creator_style,
+        "wallet":request.wallet
     }
     
     # Generate JWT token
@@ -135,7 +138,8 @@ async def signup(request: SignupRequest, db: AsyncSession = Depends(get_db)):
             email=request.email,
             name=request.name,
             isCreator=request.is_creator,
-            creatorId=creator_id
+            creatorId=creator_id,
+            wallet=request.wallet
         )
     )
 
@@ -192,7 +196,8 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
             email=user["email"],
             name=user["name"],
             isCreator=user["isCreator"],
-            creatorId=user["creatorId"]
+            creatorId=user["creatorId"],
+            wallet = user.get("wallet")
         )
     )
 
@@ -216,7 +221,8 @@ async def get_current_user(db: AsyncSession = Depends(get_db)):
         email="demo@kultr.com",
         name="Demo User",
         isCreator=True,
-        creatorId=1
+        creatorId=1,
+        wallet="http://ilp.interledger.com/abai"
     )
 
 
