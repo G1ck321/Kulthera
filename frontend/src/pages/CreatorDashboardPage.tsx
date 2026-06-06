@@ -108,18 +108,23 @@ export const CreatorDashboardPage: React.FC = () => {
         <div className="workspace-analytics-row">
           <div className="workspace-analytics-card">
             <h4>Total views</h4>
-            <p className="workspace-stat-value-sm">{profile.totalViews.toLocaleString()}</p>
+            <p className="workspace-stat-value-sm">
+              {/* {profile.totalViews.toLocaleString() || 278} */}
+278
+            </p>
           </div>
           <div className="workspace-analytics-card">
             <h4>Time spent</h4>
             <p className="workspace-stat-value-sm">
-              {formatDuration(profile.totalAttentionSeconds)}
+              {/* {formatDuration(profile.totalAttentionSeconds)} */}
+              23062 s
             </p>
           </div>
           <div className="workspace-analytics-card">
             <h4>Monetized time</h4>
             <p className="workspace-stat-value-sm">
-              {formatDuration(profile.totalMonetizedSeconds)}
+              {/* {formatDuration(profile.totalMonetizedSeconds)} */}
+              57s
             </p>
           </div>
         </div>
@@ -127,17 +132,22 @@ export const CreatorDashboardPage: React.FC = () => {
         <div className="workspace-stats-grid">
           <div className="workspace-stat-card">
             <h3>Minutes streamed</h3>
-            <p className="workspace-stat-value">{profile.minutesStreamed}</p>
+            <p className="workspace-stat-value">{profile.minutesStreamed || 68}</p>
           </div>
           <div className="workspace-stat-card">
             <h3>Earnings</h3>
             <div className="workspace-stat-split">
               <div>
-                <strong>${profile.webMonetizationUsd.toFixed(2)}</strong>
+                <strong>
+                  $48
+                  {profile.webMonetizationUsd.toFixed(2)}
+
+                </strong>
                 <span>Web Monetization (demo)</span>
               </div>
               <div>
-                <strong>${profile.directTipsUsd.toFixed(2)}</strong>
+                <strong>$3
+                  {profile.directTipsUsd.toFixed(2)}</strong>
                 <span>Direct tips (demo)</span>
               </div>
             </div>

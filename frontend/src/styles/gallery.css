@@ -565,7 +565,9 @@
   .gallery-hero {
     padding: 40px 20px;
   }
-
+  .lightbox-content{
+    overflow-y: auto;
+  }
   .gallery-hero h1 {
     font-size: 32px;
   }
@@ -577,8 +579,10 @@
 }
 
 @media (max-width: 480px) {
+
   .lightbox-info {
-    padding: 16px;
-    gap: 16px;
+    padding: 10px;
+    gap: 10px;
   }
+  
 }

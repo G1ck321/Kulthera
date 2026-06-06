@@ -4,14 +4,15 @@ export default function PaymentTest() {
   const [status, setStatus] = useState('Ready');
 
   useEffect(() => {
-    // Automatically catch the redirect parameters inside native Vite lifecycle hook
+    // 1. Immediately scan the active URL parameters on mount
     const urlParams = new URLSearchParams(window.location.search);
     const interactRef = urlParams.get('interact_ref');
     const result = urlParams.get('result');
 
-    // If the hash is present but "result" is missing, we check for the hash parameter explicitly
+    // 2. If we find an interactive reference string, fire the finalization script instantly
     if (interactRef) {
-      setStatus('🔄 Step 2: Wallet Approved! Sending reference to terminal bridge...');
+      setStatus('🔄 Step 2: Wallet Approved! Unlocking background terminal loop...');
+      console.log("Captured interact_ref from URL redirect:", interactRef);
       
       fetch('http://localhost:4000/finalize-payment', {
         method: 'POST',
@@ -23,11 +24,13 @@ export default function PaymentTest() {
         return res.json();
       })
       .then(() => {
-        setStatus('🎉 Success! Reference code sent. Look at your backend terminal window!');
+        setStatus('🎉 Success! Look at your backend terminal console for confirmation metrics!');
       })
       .catch(err => {
         setStatus(`❌ Transmission failed: ${err.message}`);
       });
+    } else if (result === 'invalid_interaction') {
+      setStatus('❌ Interaction session rejected by the wallet provider.');
     }
   }, []);
 
@@ -44,16 +47,16 @@ export default function PaymentTest() {
         setStatus(`❌ Failed: ${data.error || 'No redirect URL returned'}`);
       }
     } catch (err: any) {
-      setStatus(`❌ Connection Error to port 4000: ${err.message}`);
+      setStatus(`❌ Connection Error to bridge port 4000: ${err.message}`);
     }
   };
 
   return (
     <div style={{ padding: '40px', fontFamily: 'sans-serif' }}>
-      <h1>Open Payments Startup Portal</h1>
+      <h1>Open Payments Production Bridge Test</h1>
       <button 
         onClick={handleStartPayment} 
-        style={{ padding: '12px 24px', fontSize: '16px', cursor: 'pointer', backgroundColor: '#0070f3', color: '#fff', border: 'none', borderRadius: '5px' }}
+        style={{ padding: '12px 24px', fontSize: '16px', cursor: 'pointer', backgroundColor: '#75381e', color: '#fff', border: 'none', borderRadius: '5px' }}
       >
         💸 Connect Wallet & Authorize Payment
       </button>

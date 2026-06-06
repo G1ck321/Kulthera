@@ -10,7 +10,7 @@
     "start": "node dist/bridge.js"
   },
   "dependencies": {
-    "@interledger/open-payments": "^1.0.0",
+    "@interledger/open-payments": "^7.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2"

@@ -222,7 +222,7 @@ async def get_current_user(db: AsyncSession = Depends(get_db)):
         name="Demo User",
         isCreator=True,
         creatorId=1,
-        wallet="http://ilp.interledger.com/abai"
+        wallet="ilp.interledger.com/abai"
     )
 
 

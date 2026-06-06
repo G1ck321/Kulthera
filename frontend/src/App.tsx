@@ -20,20 +20,24 @@ const App: React.FC = () => {
           <Header />
           <main style={{ flex: 1 }}>
             <Routes>
+              {/* Standard Application Routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/music" element={<SoundRootsPage />} />
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/room/:creatorSlug" element={<ArtistRoomPage />} />
               <Route path="/auth" element={<AuthPage />} />
-              <Route path="/paycheck" element={<PaymentTest />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute requireCreator>
-                    <CreatorDashboardPage />
-                  </ProtectedRoute>
-                }
-              />
+              
+              {/* Dedicated Payment Callback Redirect Endpoint */}
+              <Route path="/paycheck" element={<PaymentTest />} /> 
+              
+              {/* Protected Dashboard Route */}
+              <Route path="/dashboard" element={
+                <ProtectedRoute requireCreator>
+                  <CreatorDashboardPage />
+                </ProtectedRoute>
+              } />
+              
+              {/* Catch-All Fallback Route Redirect */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
